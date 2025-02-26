@@ -1,0 +1,34 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// Prisma Client 생성
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 데이터베이스 연결 설정 (.env 파일을 통한 DB Connection)
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//테이블 정의
+model RAX_USER {
+  RAX_U_ID        Int       @id @default(autoincrement()) @db.Int      // 사용자 Index 칼럼
+  RAX_U_USER_ID   String    @unique @db.VarChar(15)   // 사용자 아이디
+  RAX_U_USER_NAME String?   @db.VarChar(15)   // 사용자 이름
+  RAX_U_UUID      String?   @db.VarChar(16)   // 사용자 RFID 카드 UID
+  RAX_U_PAR_NAME  String?   @db.VarChar(15)   // 사용자 세례명
+  RAX_U_EMAIL     String?   @db.Text         // 사용자 이메일
+  RAX_U_PWD       String?   @db.VarChar(20)   // 사용자 비밀번호
+  RAX_U_TEL       String?   @db.VarChar(13)   // 사용자 전화번호
+  RAX_U_DEPT      String?   @db.VarChar(10)   // 사용자 부서
+  RAX_U_ADDR      String?   @db.Text         // 사용자 주소
+  RAX_U_BIRTH     DateTime? // 사용자 생년월일
+  RAX_U_PAR_BIRTH DateTime? // 사용자 축일
+  RAX_U_DEPT_ROLE String?   @db.VarChar(3)    // 사용자 부서 역할
+  RAX_U_STATUS    String?   @db.VarChar(1)    // 사용자 상태 (0: 졸업 / 1: 휴임 / 2: 봉사)
+}
