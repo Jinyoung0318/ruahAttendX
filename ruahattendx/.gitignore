@@ -39,3 +39,36 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Node.js dependencies
+node_modules/
+
+# Next.js build output
+.next/
+.next/cache/
+.next/static/
+
+# Next.js export output
+out/
+
+# VS Code settings (선택 사항)
+.vscode/
+
+# macOS 관련 파일 (선택 사항)
+.DS_Store
+
+# Deployment files (Vercel, Netlify 등)
+.vercel/
+.netlify/
+
+# TypeScript build output (선택 사항)
+dist/
+
+# JetBrains IDE settings
+.idea/
+
+# 기타 IDE 설정 파일 (IntelliJ, WebStorm 등)
+*.iml
+
+# 기타
+*.log
