@@ -18,7 +18,7 @@ datasource db {
 //테이블 정의
 model RAX_USER {
   RAX_U_ID        Int       @id @default(autoincrement()) // 사용자 Index 칼럼 (PK)
-  RAX_U_USER_ID   String    @db.VarChar(15) // 사용자 아이디
+  RAX_U_USER_ID   String    @unique @db.VarChar(15) // 사용자 아이디
   RAX_U_USER_NAME String    @db.VarChar(15) // 사용자 이름
   RAX_U_UUID      String?   @db.VarChar(16) // 사용자 RFID 카드 UID
   RAX_U_PAR_NAME  String?   @db.VarChar(15) // 사용자 실체명
