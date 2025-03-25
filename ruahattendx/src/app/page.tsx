@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import {NextResponse} from "next/server";
 
 export default function LoginPage() {
   const [userId, setUserId] = useState("");
@@ -19,13 +20,13 @@ export default function LoginPage() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId, password }),
     });
+    const data = await res.json();
 
-    if (res.ok) {
+    if (res.status === 200) {
       //router.push("/dashboard"); // 로그인 성공 시 대시보드로 이동
       setSuccess("로그인에 성공하였습니다.");
     } else {
-      const { message } = await res.json();
-      setError(message);
+        alert(data.message);
     }
   };
 
