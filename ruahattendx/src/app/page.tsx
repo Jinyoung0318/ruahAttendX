@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import {NextResponse} from "next/server";
+import { NextResponse } from "next/server";
 
 export default function LoginPage() {
   const [userId, setUserId] = useState("");
@@ -11,7 +11,8 @@ export default function LoginPage() {
   const router = useRouter();
   const [success, setSuccess] = useState("");
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
     setError("");
     setSuccess("");
 
@@ -26,31 +27,52 @@ export default function LoginPage() {
       //router.push("/dashboard"); // 로그인 성공 시 대시보드로 이동
       setSuccess("로그인에 성공하였습니다.");
     } else {
-        alert(data.message);
+      alert(data.message);
     }
   };
 
-  return (
-      <div className="flex flex-col items-center justify-center min-h-screen">
-        <h1 className="text-2xl font-bold">로그인</h1>
-        <input
-            type="id"
-            placeholder="사용자 아이디"
-            value={userId}
-            onChange={(e) => setUserId(e.target.value)}
-            className="border p-2 my-2"
-        />
-        <input
-            type="password"
-            placeholder="비밀번호"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 my-2"
-        />
-        <button onClick={handleLogin} className="bg-blue-500 text-white p-2 rounded">
-          로그인
-        </button>
-        {error && <p className="text-red-500">{error}</p>}
-      </div>
-  );
+    return (
+        <div className="flex min-h-screen items-center justify-center bg-gray-100">
+            <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
+                <img
+                    src="/main.png"
+                    alt="루하출석시스템 메인 로고"
+                    className="w-32 h-auto mx-auto"
+                />
+
+                {error && <div className="text-red-500 mb-4">{error}</div>}
+                {success && <div className="text-green-500 mb-4">{success}</div>}
+
+                <form onSubmit={handleLogin}>
+                    <div className="mb-4">
+                        <label className="block text-gray-700 mb-2">아이디</label>
+                        <input
+                            type="text"
+                            value={userId}
+                            onChange={(e) => setUserId(e.target.value)}
+                            className="w-full px-3 py-2 border rounded-md text-black"
+                            placeholder="아이디를 입력하세요"
+                            required
+                        />
+                    </div>
+
+                    <div className="mb-6">
+                        <label className="block text-gray-700 mb-2">비밀번호</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            className="w-full px-3 py-2 border rounded-md text-black"
+                            placeholder="비밀번호를 입력하세요"
+                            required
+                        />
+                    </div>
+
+                    <button type="submit" className="w-full bg-black text-white py-2 rounded-md hover:bg-gray-800">
+                        로그인
+                    </button>
+                </form>
+            </div>
+        </div>
+    );
 }
