@@ -2,34 +2,35 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { NextResponse } from "next/server";
 
 export default function LoginPage() {
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const router = useRouter();
-  const [success, setSuccess] = useState("");
+    const [userId, setUserId] = useState("");
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+    const router = useRouter();
+    const [success, setSuccess] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
+        setSuccess("");
 
-    const res = await fetch("/user-management/api/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId, password }),
-    });
-    const data = await res.json();
+        const res = await fetch("/user-management/api/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({userId, password}),
+        });
+        const data = await res.json();
 
-    if (res.status === 200) {
-      //router.push("/dashboard"); // 로그인 성공 시 대시보드로 이동
-      setSuccess("로그인에 성공하였습니다.");
-    } else {
-      alert(data.message);
-    }
-  };
+        if (res.status === 200) {
+            //router.push("/dashboard"); // 로그인 성공 시
+            //setSuccess("로그인에 성공하였습니다.");
+            sessionStorage.setItem("user",JSON.stringify(data.user));
+            router.push("/attendance-rate");
+        } else {
+            alert(data.message);
+        }
+    };
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
