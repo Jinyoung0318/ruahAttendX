@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function LoginPage() {
     const [userId, setUserId] = useState("");
@@ -12,8 +13,6 @@ export default function LoginPage() {
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError("");
-        setSuccess("");
 
         const res = await fetch("/user-management/api/login", {
             method: "POST",
@@ -23,10 +22,8 @@ export default function LoginPage() {
         const data = await res.json();
 
         if (res.status === 200) {
-            //router.push("/dashboard"); // 로그인 성공 시
-            //setSuccess("로그인에 성공하였습니다.");
             sessionStorage.setItem("user",JSON.stringify(data.user));
-            router.push("/attendance-rate");
+            //router.push("/dashboard"); // 로그인 성공 시
         } else {
             alert(data.message);
         }
@@ -34,6 +31,12 @@ export default function LoginPage() {
 
     return (
         <div className="flex min-h-screen items-center justify-center bg-gray-100">
+            <div className="absolute top-6 right-6">
+                <Link href="/"
+                      className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-3 rounded-lg transition-colors text-lg">
+                    메인페이지
+                </Link>
+            </div>
             <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
                 <img
                     src="/main.png"
