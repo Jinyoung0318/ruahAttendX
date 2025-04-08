@@ -21,19 +21,4 @@ dist-ssr
 *.ntvs*
 *.njsproj
 *.sln
-*.sw
-
-# Python 가상환경
-venv/
-.venv/
-
-# PyCharm 설정파일 (필요 시 제외)
-.idea/
-
-# Python 컴파일 파일
-__pycache__/
-*.py[cod]
-*.pyo
-
-# 로그나 캐시
-*.sqlite3
+*.sw?
