@@ -1,0 +1,118 @@
+.container {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background-color: #f5f5f5;
+      position: relative;
+      padding: 40px 20px;
+}
+
+.header {
+      width: 100%;
+      position: relative;
+      padding: 20px;
+}
+
+.title {
+    font-size:32.5px;
+    color: #333;
+    font-weight: bold;
+}
+
+.loginButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #4285f4;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  z-index: 1000;
+}
+
+.loginButton:hover {
+  background: #357abd;
+}
+
+.mainContent {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
+  margin: auto;
+}
+
+.cardIcon {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 30px;
+  background: linear-gradient(to bottom right, #4B4DED, #28A5F5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardIcon img {
+  width: 100px;
+  height: 100px;
+  filter: brightness(0) invert(1);
+}
+
+.cardText {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4B4DED;
+  margin-bottom: 10px;
+}
+
+.subText {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 40px;
+}
+
+.recentScans {
+  background: #2c3e50;
+  color: white;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.scanTitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #f5f5f5;
+}
+
+.scanTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scanTable th,
+.scanTable td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+  color: white;
+}
+
+.scanTable th {
+  font-weight: bold;
+  color: #ccc;
+}
+
+.scanTable tr:last-child td {
+  border-bottom: none;
+}
