@@ -37,3 +37,4 @@ __pycache__/
 
 # 로그나 캐시
 *.sqlite3
+*.svg
