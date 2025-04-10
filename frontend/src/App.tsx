@@ -1,11 +1,31 @@
 // App.tsx
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate} from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import styles from './styles/certification.module.css'
-import Login from './pages/auth/login' // ⬅️ login 페이지 import
+import Login from './pages/auth/login'
 import { MdBadge } from 'react-icons/md'
+import axios from 'axios'
 
 const MainPage = () => {
     const navigate = useNavigate();
+    const [scanRecords, setScanRecords] = useState([]);
+
+    interface ScanRecord {
+        raxUUserName: string;
+        raxUParNAme: string;
+        raxADate: string;
+    }
+
+    useEffect(() => {
+        axios.get('/api/attendances')
+            .then(response => {
+                setScanRecords(response.data || []);
+            })
+            .catch(() => {
+                setScanRecords([]); // 에러 발생 시에도 빈 배열로 처리
+            });
+    }, []);
+
 
     return (
         <div className={styles.container}>
@@ -32,21 +52,21 @@ const MainPage = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>John Doe</td>
-                            <td>Joseph</td>
-                            <td>2024-01-20</td>
-                        </tr>
-                        <tr>
-                            <td>Jane Smith</td>
-                            <td>Micheal</td>
-                            <td>2024-01-20</td>
-                        </tr>
-                        <tr>
-                            <td>Mike Johnson</td>
-                            <td>Maria</td>
-                            <td>2024-01-20</td>
-                        </tr>
+                        {scanRecords.length > 0 ? (
+                            scanRecords.map((record: ScanRecord, index) => (
+                                <tr key={index}>
+                                    <td>{record.raxUUserName}</td>
+                                    <td>{record.raxUParNAme}</td>
+                                    <td>{record.raxADate}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan={3} style={{ textAlign: 'center', color: '#999' }}>
+                                    최근 인증 기록이 없습니다.
+                                </td>
+                            </tr>
+                        )}
                         </tbody>
                     </table>
                 </section>
