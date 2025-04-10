@@ -17,7 +17,7 @@ const Login = () => {
             <button className={styles.authButton} onClick={() => navigate('/')}>인증페이지</button>
             <div className={styles.loginCard}>
                 <div className={styles.logo}>
-                    <img src="/logo.svg" alt="Logo" />
+                    <img src="../public/ruah1.png" alt="Logo" />
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className={styles.inputGroup}>
@@ -39,7 +39,7 @@ const Login = () => {
                         />
                     </div>
                     <button type="submit" className={styles.loginButton}>
-                        Log in
+                        로그인
                     </button>
                 </form>
             </div>

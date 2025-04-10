@@ -37,7 +37,7 @@
     background: white;
     padding: 40px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
 }
@@ -48,35 +48,43 @@
 }
 
 .logo img {
-    width: 120px;
+    width: 100vw;
 }
 
 .inputGroup {
     margin-bottom: 20px;
+    color : black
 }
 
 .inputGroup label {
     display: block;
     margin-bottom: 8px;
-    color: #333;
+    color: black;
 }
 
 .inputGroup input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid black;
     border-radius: 4px;
     font-size: 14px;
+    background-color: white;
 }
 
 .loginButton {
     width: 100%;
     padding: 12px;
     color: black;
-    background-color: #4B4DED;
+    background-color: black;
     border: 2px solid black;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     font-weight: bold;
 }
+
+.loginButton:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+ }
