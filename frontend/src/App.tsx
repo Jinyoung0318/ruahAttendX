@@ -5,6 +5,7 @@ import styles from './styles/certification.module.css'
 import Login from './pages/auth/login'
 import { MdBadge } from 'react-icons/md'
 import axios from 'axios'
+import Dashboard from "./pages/attendance/dashboard";
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -80,6 +81,7 @@ const App = () => {
         <Routes>
             <Route path="/" element={<MainPage />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
     )
 }

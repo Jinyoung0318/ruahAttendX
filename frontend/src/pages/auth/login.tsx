@@ -7,14 +7,31 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        //todo: Login Logic
+        try {
+            const response = await fetch('http://localhost:8000/api/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, password }),
+            });
+
+            if (response.ok) {
+                navigate('/dashboard');
+            } else {
+                alert('아이디 혹은 비밀번호가 틀립니다.');
+            }
+        } catch (error) {
+            console.error('로그인 요청 실패:', error);
+            alert('서버 오류가 발생했습니다.');
+        }
     };
 
     return (
         <div className={styles.container}>
-            <button className={styles.authButton} onClick={() => navigate('/')}>인증페이지</button>
+            <button className={styles.authButton} onClick={() => navigate('/')}>출석체크</button>
             <div className={styles.loginCard}>
                 <div className={styles.logo}>
                     <img src="../public/ruah1.png" alt="Logo" />
@@ -23,7 +40,7 @@ const Login = () => {
                     <div className={styles.inputGroup}>
                         <label>아이디</label>
                         <input
-                            type="ID"
+                            type="text"
                             placeholder="아이디를 입력해주세요"
                             value={userId}
                             onChange={(e) => setUserId(e.target.value)}

@@ -1,0 +1,29 @@
+/* components/common/Header.module.css */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem; /* Tailwind: mb-6 */
+}
+
+.title {
+    font-size: 1.5rem; /* Tailwind: text-2xl */
+    font-weight: bold;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Tailwind: gap-2 */
+}
+
+.avatar {
+    width: 2rem; /* Tailwind: w-8 */
+    height: 2rem; /* Tailwind: h-8 */
+    border-radius: 9999px; /* Tailwind: rounded-full */
+}
+
+.userName {
+    font-weight: 500; /* Tailwind: font-medium */
+}
