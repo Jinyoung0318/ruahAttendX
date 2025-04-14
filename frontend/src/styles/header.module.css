@@ -4,26 +4,31 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem; /* Tailwind: mb-6 */
+    /*margin-bottom: 1.5rem;*/
+    background-color: white;
+    padding : 1.250rem 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 
 .title {
-    font-size: 1.5rem; /* Tailwind: text-2xl */
+    font-size: 1.5rem;
     font-weight: bold;
+    color: black
 }
 
 .userInfo {
     display: flex;
     align-items: center;
-    gap: 0.5rem; /* Tailwind: gap-2 */
+    gap: 0.5rem;
 }
 
 .avatar {
-    width: 2rem; /* Tailwind: w-8 */
-    height: 2rem; /* Tailwind: h-8 */
-    border-radius: 9999px; /* Tailwind: rounded-full */
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
 }
 
 .userName {
-    font-weight: 500; /* Tailwind: font-medium */
+    font-weight: 500;
+    color: black;
 }

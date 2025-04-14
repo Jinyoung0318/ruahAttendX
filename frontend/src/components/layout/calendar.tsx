@@ -1,31 +1,27 @@
-import React from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
+import { useState } from 'react';
+import CalendarLib from 'react-calendar';
 import styles from '../../styles/calendar.module.css';
 
-interface AttendanceCalendarProps {
-    attendedDates: string[]; // 'YYYY-MM-DD' 형식
-}
+type CalendarValue = Date | [Date | null, Date | null] | null;
 
-const AttendanceCalendar: React.FC<AttendanceCalendarProps> = ({
-    attendedDates,
-}) => {
-    const currentDate = new Date();
-    const displayMonth = `${currentDate.getFullYear()}.${String(currentDate.getMonth() + 1).padStart(2, '0')}`;
+const Calendar = () => {
+    const [value, setValue] = useState<CalendarValue>(new Date());
 
     return (
         <div className={styles.card}>
             <div className={styles.header}>
-                <span className={styles.title}>{displayMonth}</span>
+                <h2 className={styles.title}>
+                    🗓️출석 달력🗓️
+                </h2>
             </div>
-            <Calendar
-                tileClassName={({ date }) => {
-                    const iso = date.toISOString().split('T')[0];
-                    return attendedDates.includes(iso) ? styles.attendedDay : undefined;
-                }}
+            <CalendarLib
+                onChange={setValue}
+                value={value}
+                locale="en-US"
+                className={styles.reactCalendar}
             />
         </div>
     );
 };
 
-export default AttendanceCalendar;
+export default Calendar;

@@ -1,35 +1,42 @@
 .main-content {
-    flex: 1;
-    padding: 2rem;
-    overflow-y: auto;
-    background-color: #f9fafb;
+    padding: 20px;
+    height: 100vh;
+    background-color: #f5f5f5;
 }
 
-.dashboard-grid {
+.content-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    height: calc(100% - 40px);
 }
 
-.attendance-rate-card,
-.calendar-card {
-    background-color: white;
-    border-radius: 0.5rem;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #111827;
-    margin-bottom: 1rem;
+.attendance-rate {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.calendar {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.recent-attendance {
+    grid-column: 1 / span 2;
+    grid-row: 2;
 }
 
 h2 {
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #374151;
-    margin-bottom: 1rem;
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }

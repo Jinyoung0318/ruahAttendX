@@ -1,22 +1,21 @@
-import '../../styles/mainContenet.module.css';
 import AttendanceRate from '../layout/attendanceRate.tsx';
 import Calendar from '../layout/calendar.tsx';
+import RecentAttendance from '../layout/RecentAttendance.tsx';
 
-const MainContenet = () => {
+const Dashboard = () => {
     return (
-        <div className="dashboard-container">
-            <div className="dashboard-body">
-                <div className="attendance-rate-card">
-                    <h2>출석률</h2>
-                    <AttendanceRate attendanceRate={80}/>
-                </div>
-                <div className="calendar-card">
-                    <h2>이번 달</h2>
-                    <Calendar attendedDates={['2025-04-11']}/>
+        <div className="flex">
+            <div className="flex-1">
+                <div className="p-6 space-y-6">
+                    <div className="grid grid-cols-2 gap-6">
+                        <AttendanceRate />
+                        <Calendar />
+                    </div>
+                    <RecentAttendance />
                 </div>
             </div>
         </div>
     );
 };
 
-export default MainContenet;
+export default Dashboard;

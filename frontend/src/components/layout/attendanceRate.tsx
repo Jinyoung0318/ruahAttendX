@@ -1,19 +1,19 @@
-import React from 'react';
-import styles from '../../styles/atttendanceRate.module.css';
+import {CircularProgressbar} from "react-circular-progressbar";
 
-interface attendanceRateProps {
-    attendanceRate: number;
-}
-
-const AttendanceRate: React.FC<attendanceRateProps> = ({ attendanceRate }) => {
+const AttendanceRate = () => {
     return (
-        <div className={styles.container}>
-            <div className={styles.card}>
-                <h2 className={styles.header}>This Month</h2>
-                <div className={styles.attendanceRate}>
-                    {attendanceRate}%
-                </div>
-                <div className={styles.subtitle}>Attendance Rate</div>
+        <div className="p-6 bg-white rounded-lg shadow">
+            <h2 className="text-lg mb-4">Attendance Rate</h2>
+            <div className="relative w-48 h-48 mx-auto">
+                {/* Using react-circular-progressbar or similar library */}
+                <CircularProgressbar
+                    value={80}
+                    text={`${80}%`}
+                    styles={{
+                        path: { stroke: '#4CAF50' },
+                        text: { fill: '#333', fontSize: '16px' }
+                    }}
+                />
             </div>
         </div>
     );

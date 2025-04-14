@@ -1,8 +1,12 @@
 .container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+    height: 100%;
 }
 
 .card {
@@ -32,4 +36,22 @@
     font-size: 1rem;
     font-weight: 600;
     margin-top: 0.5rem;
+}
+
+.chartWrapper {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    max-height: 120px;
+    margin: 0 auto;
+}
+
+.rateLabel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #3b82f6;
 }
