@@ -1,5 +1,8 @@
 import styles from '../../styles/header.module.css';
 
+const userName = JSON.parse(sessionStorage.getItem('user') || '{}').userName;
+const userParName = JSON.parse(sessionStorage.getItem('user') || '{}').userParName;
+
 const CommHeader = () => {
     return (
         <div className={styles.header}>
@@ -10,7 +13,7 @@ const CommHeader = () => {
                     alt="User"
                     className={styles.avatar}
                 />
-                <span className={styles.userName}>John Doe</span>
+                <span className={styles.userName}>{userName} _ {userParName}</span>
             </div>
         </div>
     );
