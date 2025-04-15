@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import styles from '../../styles/login.module.css';
 
 const Login = () => {
@@ -10,15 +11,13 @@ const Login = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:8000/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ userId, password }),
-            });
+            const response = await axios.post('/api/login', {
+                    userId,
+                    password
+                });
 
-            if (response.ok) {
+            if (response.data) {
+                sessionStorage.setItem('user', JSON.stringify(response.data));
                 navigate('/dashboard');
             } else {
                 alert('아이디 혹은 비밀번호가 틀립니다.');

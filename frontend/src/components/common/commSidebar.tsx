@@ -4,12 +4,13 @@ import styles from '../../styles/sidebar.module.css';
 const CommSidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const userDept = JSON.parse(sessionStorage.getItem('user') || '{}').userDept;
 
     const menuItems = [
-        { name: 'Dashboard', path: '/dashboard' },
-        { name: 'Attendance History', path: '/attendance-history' },
-        { name: 'Profile', path: '/profile' },
-        { name: 'User Management', path: '/user-management' },
+        { name: '출석률 현황', path: '/dashboard' },
+        { name: '카드 등록', path: '/card-regist' },
+        { name: '사용자 프로필', path: '/profile' },
+        ...(userDept === 'admin' ? [{ name: '사용자 관리', path: '/user-management' }] : []),
     ];
 
     return (
