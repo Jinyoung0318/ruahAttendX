@@ -43,8 +43,8 @@
 
 .activeButton {
     font-weight: 600;
-    color: #292929;
-    background-color: #cfdced; /* Tailwind: bg-blue-600 */
+    color: black;
+    background-color: #f8d256;
 }
 
 .inactiveButton {
@@ -52,5 +52,5 @@
 }
 
 .inactiveButton:hover {
-    background-color: #e5e7eb; /* Tailwind: hover:bg-gray-200 */
+    background-color: #fbe9a7; /* Tailwind: hover:bg-gray-200 */
 }

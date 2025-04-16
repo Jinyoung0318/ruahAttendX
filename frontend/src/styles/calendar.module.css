@@ -96,7 +96,7 @@
 
 
 :global(.react-calendar__tile.react-calendar__tile--now) {
-    background-color: #bbf7d0;
+    background-color: #ffdd00;
     color: black;
     /*font-weight: bold;*/
     border-radius: 0.375rem;

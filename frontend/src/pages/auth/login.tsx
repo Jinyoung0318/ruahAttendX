@@ -2,11 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styles from '../../styles/login.module.css';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 
 const Login = () => {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -48,11 +50,14 @@ const Login = () => {
                     <div className={styles.inputGroup}>
                         <label>비밀번호</label>
                         <input
-                            type="password"
+                            type={showPassword ? 'text' : 'password'}
                             placeholder="비밀번호를 입력해주세요"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <span className={styles.showPassword} onClick={() => setShowPassword(!showPassword)}>
+                            {showPassword ? <AiOutlineEyeInvisible/> : <AiOutlineEye/>}
+                        </span>
                     </div>
                     <button type="submit" className={styles.loginButton}>
                         로그인

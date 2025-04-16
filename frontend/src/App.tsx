@@ -36,7 +36,7 @@ const MainPage = () => {
                     <h1 className={styles.title}>출석 체크</h1>
                 </div>
                 <div className={styles.cardIcon}>
-                    <MdBadge size={48} color="white" />
+                    <MdBadge size={48} color="black" />
                 </div>
 
                 <div className={styles.cardText}>카드를 태깅해주세요</div>
@@ -63,7 +63,7 @@ const MainPage = () => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan={3} style={{ textAlign: 'center', color: '#999' }}>
+                                <td colSpan={3} style={{ textAlign: 'center', color: '#737373' }}>
                                     최근 인증 기록이 없습니다.
                                 </td>
                             </tr>

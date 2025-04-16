@@ -53,7 +53,8 @@
 
 .inputGroup {
     margin-bottom: 20px;
-    color : black
+    color : black;
+    position: relative;
 }
 
 .inputGroup label {
@@ -65,18 +66,19 @@
 .inputGroup input {
     width: 100%;
     padding: 10px;
-    border: 1px solid black;
+    border: 1px solid #00ac0e;
     border-radius: 4px;
     font-size: 14px;
     background-color: white;
+    font-weight: bold;
 }
 
 .loginButton {
     width: 100%;
     padding: 12px;
-    color: black;
+    color: #3cdf0f;
     background-color: black;
-    border: 2px solid black;
+    border: 2px solid #00ac0e;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
@@ -85,6 +87,20 @@
 
 .loginButton:hover {
     background-color: white;
-    color: black;
-    border: 2px solid black;
+    color: #00ac0e;
+    border: 2px solid #00ac0e;
  }
+
+.inputGroup input:focus {
+    outline: #ffdd00;
+    border-color: #00ac0e;
+}
+
+.showPassword {
+    position: absolute;
+    right: 10px;
+    top: 38px;
+    cursor: pointer;
+    font-size: 30px;
+    user-select: none;
+}

@@ -13,7 +13,7 @@ const CommHeader = () => {
                     alt="User"
                     className={styles.avatar}
                 />
-                <span className={styles.userName}>{userName} _ {userParName}</span>
+                <span className={styles.userName}>{userName} {userParName}</span>
             </div>
         </div>
     );
