@@ -19,8 +19,8 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    background: #4285f4;
-    color: white;
+    background: #FFD700;
+    color: black;
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
@@ -30,7 +30,7 @@
 }
 
 .authButton:hover {
-    background: #357abd;
+    background: #FFB300;
 }
 
 .loginCard {
@@ -66,7 +66,7 @@
 .inputGroup input {
     width: 100%;
     padding: 10px;
-    border: 1px solid #00ac0e;
+    border: 1px solid #fbdc30;
     border-radius: 4px;
     font-size: 14px;
     background-color: white;
@@ -78,7 +78,7 @@
     padding: 12px;
     color: #3cdf0f;
     background-color: black;
-    border: 2px solid #00ac0e;
+    border: 2px solid #fbdc30;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;

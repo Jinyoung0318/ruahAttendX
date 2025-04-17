@@ -1,17 +1,37 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from '../../styles/recentAttendance.module.css';
 import DateFilter from '../common/commCalendarSearch.tsx';
+import axios from 'axios';
+
+type AttendanceRecord = {
+    date: string;
+    status: string;
+};
 
 const RecentAttendance = () => {
-    const [selectedRange] = useState('1개월');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+    const [attendanceList, setAttendanceList] = useState<AttendanceRecord[]>([]);
+    const userId = JSON.parse(sessionStorage.getItem('user') || '{}').userId
 
-    useEffect(() => {
-        // API 호출 로직 자리 (selectedRange 값을 기준으로)
-        console.log(`Fetching data for ${selectedRange}`);
-        // 예: axios.get(`/api/attendance?range=${selectedRange}`)
-    }, [selectedRange]);
+    const totalPages = Math.max(1, Math.ceil(attendanceList.length / itemsPerPage));
+    const paginatedData = attendanceList.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const fetchAttendance = () => {
+        axios.get('/api/recentAttendance', {
+            params: { start_date: startDate, end_date: endDate , userid: userId },
+        }).then(res => {
+            setAttendanceList(res.data);
+            setCurrentPage(1);
+        }).catch(err => {
+            console.error('출석 데이터 불러오기 실패:', err);
+        });
+    };
 
     return (
         <div className={styles.container}>
@@ -25,10 +45,7 @@ const RecentAttendance = () => {
                         setStartDate={setStartDate}
                         endDate={endDate}
                         setEndDate={setEndDate}
-                        onSearch={() => {
-                            console.log(`Searching between ${startDate} ~ ${endDate}`);
-                            // axios.get(`/api/attendance?from=${startDate}&to=${endDate}`)
-                        }}
+                        onSearch={fetchAttendance}
                     />
                 </div>
             </div>
@@ -40,14 +57,31 @@ const RecentAttendance = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td className={styles.tdLeftPresent}>2024-05-12</td>
-                        <td className={styles.tdRight}>
-                            <span className={styles.present}>Present</span>
-                        </td>
-                    </tr>
+                    {paginatedData.length > 0 ? (
+                        paginatedData.map((attendance, index) => (
+                            <tr key={index}>
+                                <td className={styles.tdLeftPresent}>{attendance.date}</td>
+                                <td className={styles.tdRight}>
+                                    <span className={styles.present}>{attendance.status}</span>
+                                </td>
+                            </tr>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan={2} style={{ textAlign: 'center', padding: '1rem', color: '#666' }}>
+                                인증 기록이 존재하지 않습니다.
+                            </td>
+                        </tr>
+                    )}
                 </tbody>
             </table>
+            {totalPages >= 1 && (
+                <div className={styles.paginationWrapper}>
+                    {Array.from({ length: totalPages }, (_, index) => (
+                        <button className={styles.pagingButton} key={index + 1} onClick={() => setCurrentPage(index + 1)}> {index + 1} </button>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };
