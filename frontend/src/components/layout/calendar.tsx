@@ -11,7 +11,7 @@ const Calendar = () => {
         <div className={styles.card}>
             <div className={styles.header}>
                 <h2 className={styles.title}>
-                    🗓️출석 달력🗓️
+                    출석 달력 🗓️
                 </h2>
             </div>
             <CalendarLib

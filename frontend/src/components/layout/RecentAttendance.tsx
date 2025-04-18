@@ -37,7 +37,7 @@ const RecentAttendance = () => {
         <div className={styles.container}>
             <div className={styles.headerRow}>
                 <div className={styles.headerLeft}>
-                    <h2 className={styles.title}>🕓 인증 기록 🕓</h2>
+                    <h2 className={styles.title}>인증 기록 🕓</h2>
                 </div>
                 <div className={styles.headerRight}>
                     <DateFilter

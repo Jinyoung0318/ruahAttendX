@@ -20,7 +20,6 @@ def get_attendance_list():
 def get_recent_attendances(start_date, end_date, userid):
     db = SessionLocal()
 
-    # Find internal user ID from external user ID
     user = db.query(RaxUser).filter(RaxUser.rax_u_user_id == userid).first()
     if not user:
         return []

@@ -7,10 +7,10 @@ const CommSidebar = () => {
     const userDept = JSON.parse(sessionStorage.getItem('user') || '{}').userDept;
 
     const menuItems = [
-        { name: '출석률 현황', path: '/dashboard' },
-        { name: '카드 등록', path: '/card-regist' },
-        { name: '사용자 프로필', path: '/profile' },
-        ...(userDept === 'admin' ? [{ name: '사용자 관리', path: '/user-management' }] : []),
+        { name: '출석률 현황 📈', path: '/dashboard' },
+        { name: '카드 등록 💳', path: '/card-regist' },
+        { name: '사용자 프로필 👤', path: '/profile' },
+        ...(userDept === 'admin' ? [{ name: '사용자 관리 🧑‍🤝‍🧑', path: '/user-management' }] : []),
     ];
 
     return (
