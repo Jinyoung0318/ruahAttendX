@@ -1,0 +1,129 @@
+.appContainer {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f9fafb;
+}
+
+.header {
+    width: 100%;
+    position: relative;
+    padding: 20px;
+}
+
+.cardIcon {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 30px;
+    background: linear-gradient(to bottom right, #FFD700, #FFB300);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.title {
+    font-size:32.5px;
+    color: #00ac0e;
+    font-weight: bold;
+}
+
+.scannerContainer {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2.5rem;
+    max-width: 36rem;
+    width: 100%;
+    margin: 2rem auto;
+    text-align: center;
+    border: 2px solid #00ac0e; /* Tailwind's blue-400 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scannerTitle {
+    font-size: 32.5px;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    color: #00ac0e;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.registerButtonContainer {
+}
+
+.scannerCircle {
+    width: 16rem;
+    height: 16rem;
+    background: linear-gradient(to right, #FFD700, #FFB300); /* from-purple-500 to-blue-400 */
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 2.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scannerSubtitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+    color: #00ac0e;
+}
+
+.scannerDescription {
+    font-size: 0.875rem;
+    color: #6b7280; /* Tailwind's gray-500 */
+}
+
+.cardOutput {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    max-width: 20rem;
+    min-height: 3rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1.25rem;
+    text-align: center;
+    background-color: #FFD700;
+    color: #111827;
+    margin-left: 100px;
+    margin-right: auto;
+}
+
+.cardOutputGroup {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.registerButton {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    max-width: 5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1.25rem;
+    text-align: center;
+    background-color: #FFD700;
+    color: #111827;
+}
+
+.registerButton:disabled {
+    margin-top: 1.5rem;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    max-width: 5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1.25rem;
+    text-align: center;
+    color: #111827;
+    background-color: #ccc;
+    cursor: not-allowed;
+}

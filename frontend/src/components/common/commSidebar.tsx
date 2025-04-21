@@ -8,7 +8,7 @@ const CommSidebar = () => {
 
     const menuItems = [
         { name: '출석률 현황 📈', path: '/dashboard' },
-        { name: '카드 등록 💳', path: '/card-regist' },
+        { name: '카드 등록 💳', path: '/cardRegist' },
         { name: '사용자 프로필 👤', path: '/profile' },
         ...(userDept === 'admin' ? [{ name: '사용자 관리 🧑‍🤝‍🧑', path: '/user-management' }] : []),
     ];
@@ -27,8 +27,7 @@ const CommSidebar = () => {
                         <li key={item.name}>
                             <button
                                 className={`${styles.menuButton} ${isActive ? styles.activeButton : styles.inactiveButton}`}
-                                onClick={() => navigate(item.path)}
-                            >
+                                onClick={() => navigate(item.path, { state: { pageTitle: item.name } })}>
                                 {item.name}
                             </button>
                         </li>
