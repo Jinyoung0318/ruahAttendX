@@ -3,6 +3,7 @@
     background-color: #ffffff;
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     padding: 0.5rem;
+    border: 1px solid #ffdd00;
 }
 
 .logo {

@@ -36,7 +36,7 @@
     width: 100%;
     margin: 2rem auto;
     text-align: center;
-    border: 2px solid #00ac0e; /* Tailwind's blue-400 */
+    border: 1px solid #00ac0e;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -56,7 +56,7 @@
 .scannerCircle {
     width: 16rem;
     height: 16rem;
-    background: linear-gradient(to right, #FFD700, #FFB300); /* from-purple-500 to-blue-400 */
+    background: linear-gradient(to right, #FFD700, #FFB300);
     border-radius: 9999px;
     display: flex;
     align-items: center;
@@ -74,7 +74,7 @@
 
 .scannerDescription {
     font-size: 0.875rem;
-    color: #6b7280; /* Tailwind's gray-500 */
+    color: #6b7280;
 }
 
 .cardOutput {
