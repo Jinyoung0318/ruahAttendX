@@ -20,7 +20,7 @@ const CommHeader = () => {
                 style={{ cursor: 'pointer'}}
             >
                 <img
-                    src="https://randomuser.me/api/portraits/men/1.jpg"
+                    src="../../public/mainRuah.png"
                     alt="User"
                     className={styles.avatar}
                 />

@@ -1,0 +1,134 @@
+.appContainer {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f9fafb;
+}
+
+.card {
+    border: 1px solid #00ac0e;
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 1.5rem;
+    width: 100%;
+    max-width: 768px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: black;
+}
+
+.editButton {
+    background-color: #ffdd00;
+    color: black;
+    cursor: pointer;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    transition: background-color 0.3s;
+}
+
+.saveMode {
+    background-color: #00ac0e;
+    border: 1px solid #00ac0e;
+    color: white;
+}
+
+.editButton:hover {
+    text-decoration: underline;
+}
+
+.inputField {
+    background-color: white;
+    color: #2f3640;
+    border-radius: 0.375rem;
+    display: inline-block;
+    font-size: 0.95rem;
+}
+
+.inputField:disabled {
+    background-color: #e5e7eb;
+    color: #6b7280;
+    cursor: not-allowed;
+    /* Retain border color as #ccc for disabled fields */
+    border-color: #ccc;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    row-gap: 1rem;
+    font-size: 0.875rem;
+}
+
+.label {
+    font-weight: 600;
+    display: block;
+    color: black;
+}
+
+.value {
+    margin-top: 0.25rem;
+    color: black;
+}
+
+.infoCard {
+    border: 1px solid #ffdd00;
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 0 0.5rem 0.5rem 0.5rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #111827;
+    font-size: 0.95rem;
+    flex-wrap: nowrap;
+    width: 100%;
+}
+
+.editableInput {
+    border: 1px solid #00ac0e;
+    width: 230px;
+    max-width: 100%;
+    padding: 1px 8px;
+    box-sizing: border-box;
+}
+.editableInput:focus {
+    border-color: #00ac0e;
+    outline: none;
+}
+
+
+.passwordWrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.showPassword {
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

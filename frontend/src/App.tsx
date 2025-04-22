@@ -1,12 +1,13 @@
-// App.tsx
 import { Routes, Route, useNavigate} from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import styles from './styles/certification.module.css'
 import Login from './pages/auth/login'
 import CardRegist from "./pages/card/cardRegist.tsx";
+import Dashboard from "./pages/attendance/dashboard";
+import UserProfile from "./pages/user/userProfile.tsx";
 import { MdBadge } from 'react-icons/md'
 import axios from 'axios'
-import Dashboard from "./pages/attendance/dashboard";
+
 
 const MainPage = () => {
     const navigate = useNavigate();
@@ -84,6 +85,7 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/cardRegist" element={<CardRegist />} />
+            <Route path="/userProfile" element={<UserProfile />} />
         </Routes>
     )
 }
