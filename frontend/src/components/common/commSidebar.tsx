@@ -10,7 +10,7 @@ const CommSidebar = () => {
         { name: '출석률 현황 📈', path: '/dashboard' },
         { name: '카드 등록 💳', path: '/cardRegist' },
         { name: '사용자 프로필 👤', path: '/userProfile' },
-        ...(userDept === 'admin' ? [{ name: '사용자 관리 🧑‍🤝‍🧑', path: '/user-management' }] : []),
+        ...(userDept === 'admin' ? [{ name: '사용자 관리 🧑‍🤝‍🧑', path: '/userManagement' }] : []),
     ];
 
     return (

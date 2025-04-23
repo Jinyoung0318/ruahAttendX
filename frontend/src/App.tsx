@@ -5,6 +5,7 @@ import Login from './pages/auth/login'
 import CardRegist from "./pages/card/cardRegist.tsx";
 import Dashboard from "./pages/attendance/dashboard";
 import UserProfile from "./pages/user/userProfile.tsx";
+import UserManagement from "./pages/admin/userManagement.tsx"
 import { MdBadge } from 'react-icons/md'
 import axios from 'axios'
 
@@ -86,6 +87,7 @@ const App = () => {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/cardRegist" element={<CardRegist />} />
             <Route path="/userProfile" element={<UserProfile />} />
+            <Route path="/userManagement" element={<UserManagement />} />
         </Routes>
     )
 }
