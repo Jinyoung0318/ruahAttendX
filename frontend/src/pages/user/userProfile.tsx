@@ -10,19 +10,15 @@ const UserProfile = () => {
     const [phone, setPhone] = useState("+1 (555) 123-4567");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
+    const [userId, setUserId] = useState("john123");
+    const [showConfirm, setShowConfirm] = useState(false);
 
     const handleEditClick = () => {
         setIsEditing(true);
     };
 
     const handleSaveClick = () => {
-        const confirmed = window.confirm("저장하시겠습니까?");
-        if (confirmed) {
-            // 이후 성공 시 다시 조회 API 호출
-            console.log("GET API 호출 - 최신 정보 가져오기");
-            setIsEditing(false);
-            alert("수정이 완료되었습니다.");
-        }
+        setShowConfirm(true);
     };
 
     return (
@@ -42,14 +38,20 @@ const UserProfile = () => {
                     </div>
                     <div className={styles.infoGrid}>
                         <div className={styles.infoCard}>
-                            <p className={styles.row}>
-                                <strong className={styles.label}>아이디:</strong>
-                                {isEditing ? (
-                                    <input className={styles.inputField} value="john123" onChange={() => {}} />
-                                ) : (
-                                    <span>john123</span>
-                                )}
-                            </p>
+                            {isEditing ? (
+                                <div className={styles.row}>
+                                    <strong className={styles.label}>아이디:</strong>
+                                    <input
+                                        className={`${styles.inputField} ${styles.editableInput}`}
+                                        value={userId}
+                                        onChange={(e) => setUserId(e.target.value)}
+                                    />
+                                </div>
+                            ) : (
+                                <div className={styles.row}>
+                                    <strong className={styles.label}>아이디:</strong> {userId}
+                                </div>
+                            )}
                         </div>
                         <div className={styles.infoCard}>
                             <p className={styles.row}>
@@ -195,6 +197,34 @@ const UserProfile = () => {
                     </div>
                 </div>
             </main>
+            {showConfirm && (
+                <div className={styles.popupOverlay}>
+                    <div className={styles.popup}>
+                        <p>저장하시겠습니까?</p>
+                        <div className={styles.popupActions}>
+                            <button
+                                className={styles.confirmButton}
+                                onClick={() => {
+                                    console.log("GET API 호출 - 최신 정보 가져오기");
+                                    setIsEditing(false);
+                                    setShowConfirm(false);
+                                    alert("수정이 완료되었습니다.");
+                                }}
+                            >
+                                확인
+                            </button>
+                            <button
+                                className={styles.cancelButton}
+                                onClick={() => {
+                                    setShowConfirm(false);
+                                }}
+                            >
+                                취소
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
