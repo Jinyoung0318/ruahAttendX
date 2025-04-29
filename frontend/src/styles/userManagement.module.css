@@ -165,6 +165,7 @@
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 12px;
+    text-align: center;
 }
 
 .popupForm {
@@ -181,4 +182,33 @@
     font-size: 14px;
     width: 100%;
     background-color: white;
+}
+
+.editPopup {
+    background: #f9fafb;
+    padding: 48px 60px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 50%;
+    text-align: left;
+    color: black;
+}
+
+.readonlyField {
+    background-color: #d5d5d5;
+    color: black;
+    cursor: not-allowed;
+}
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inputLabel {
+  width: 120px;
+  font-weight: bold;
+  color: #374151;
+  text-align: right;
 }

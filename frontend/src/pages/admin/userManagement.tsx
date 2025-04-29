@@ -23,6 +23,9 @@ const UserManagement = () => {
       rax_u_dept_role: '',
     });
 
+    const [showEditPopup, setShowEditPopup] = useState(false);
+    const [editUser, setEditUser] = useState<any>(null);
+
     const handleNewUserChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
       setNewUser({ ...newUser, [field]: e.target.value });
     };
@@ -92,7 +95,26 @@ const UserManagement = () => {
                                 <td><div className={styles.dataCell}>팀장</div></td>
                                 <td><span className={styles.attendanceSuccess}>95.3%</span></td>
                                 <td className={styles.actionCell}>
-                                    <span className={styles.actionEdit}>Edit</span>
+                                    <span
+                                      className={styles.actionEdit}
+                                      onClick={() => {
+                                        setEditUser({
+                                          rax_u_user_id: 'EMP001',
+                                          rax_u_user_name: 'John Doe',
+                                          rax_u_par_name: '베드로',
+                                          rax_u_email: 'john.doe@company.com',
+                                          rax_u_tel: '010-1234-5678',
+                                          rax_u_dept: '전산팀',
+                                          rax_u_addr: '서울시 강남구',
+                                          rax_u_birth: '1990-01-01',
+                                          rax_u_par_birth: '06-29',
+                                          rax_u_dept_role: '팀장'
+                                        });
+                                        setShowEditPopup(true);
+                                      }}
+                                    >
+                                      Edit
+                                    </span>
                                     <span
                                       className={styles.actionDelete}
                                       onClick={() => {
@@ -216,6 +238,71 @@ const UserManagement = () => {
                           저장
                         </button>
                         <button className={styles.cancelButton} onClick={() => setShowAddPopup(false)}>
+                          취소
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {showEditPopup && editUser && (
+                  <div className={styles.popupOverlay}>
+                    <div className={`${styles.popup} ${styles.editPopup}`}>
+                      <h3 className={styles.popupTitle}>봉사자 정보 수정</h3>
+                      <div className={styles.popupForm}>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>이름:</span>
+                          <input type="text" placeholder="이름" value={editUser.rax_u_user_name} disabled className={`${styles.inputField} ${styles.readonlyField}`} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>세례명:</span>
+                          <input type="text" placeholder="세례명" value={editUser.rax_u_par_name} disabled className={`${styles.inputField} ${styles.readonlyField}`} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>이메일:</span>
+                          <input type="email" placeholder="이메일" value={editUser.rax_u_email} onChange={(e) => setEditUser({ ...editUser, rax_u_email: e.target.value })} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>사용자 ID:</span>
+                          <input type="text" placeholder="사용자 ID" value={editUser.rax_u_user_id} onChange={(e) => setEditUser({ ...editUser, rax_u_user_id: e.target.value })} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>전화번호:</span>
+                          <input type="text" placeholder="전화번호" value={editUser.rax_u_tel} onChange={(e) => setEditUser({ ...editUser, rax_u_tel: e.target.value })} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>주소:</span>
+                          <input type="text" placeholder="주소" value={editUser.rax_u_addr} onChange={(e) => setEditUser({ ...editUser, rax_u_addr: e.target.value })} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>부서:</span>
+                          <input type="text" placeholder="부서" value={editUser.rax_u_dept} onChange={(e) => setEditUser({ ...editUser, rax_u_dept: e.target.value })} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>직책:</span>
+                          <input type="text" placeholder="직책" value={editUser.rax_u_dept_role} onChange={(e) => setEditUser({ ...editUser, rax_u_dept_role: e.target.value })} className={styles.inputField} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>생년월일:</span>
+                          <input type="text" placeholder="생년월일" value={editUser.rax_u_birth} disabled className={`${styles.inputField} ${styles.readonlyField}`} />
+                        </div>
+                        <div className={styles.inputRow}>
+                          <span className={styles.inputLabel}>축일:</span>
+                          <input type="text" placeholder="축일" value={editUser.rax_u_par_birth} disabled className={`${styles.inputField} ${styles.readonlyField}`} />
+                        </div>
+                      </div>
+                      <div className={styles.popupActions}>
+                        <button
+                          className={styles.confirmButton}
+                          onClick={() => {
+                            console.log('수정된 사용자 정보:', editUser);
+                            // TODO: 수정 API 호출
+                            setShowEditPopup(false);
+                            setEditUser(null);
+                          }}
+                        >
+                          저장
+                        </button>
+                        <button className={styles.cancelButton} onClick={() => setShowEditPopup(false)}>
                           취소
                         </button>
                       </div>
