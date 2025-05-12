@@ -13,16 +13,18 @@ def verify_user(user_id: str, password: str):
         user = db.query(RaxUser).filter(RaxUser.rax_u_user_id == user_id).first()
         if not user:
             return None
-
-        decrypted_password = decrypt(user.rax_u_password)
+        decrypted_password = decrypt(user.rax_u_pwd)
+        print(decrypted_password)
         if decrypted_password != password:
             return None
 
         return {
+            "userUId":user.rax_u_id,
             "userId": user.rax_u_user_id,
             "userName": user.rax_u_user_name,
             "userParName": user.rax_u_par_name,
-            "userDept": user.rax_u_dept
+            "userDept": user.rax_u_dept,
+            "userDeptRole": user.rax_u_dept_role
         }
     except Exception:
         return None

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import styles from "../../styles/userProfile.module.css";
 import Sidebar from "../../components/common/commSidebar.tsx";
 import Header from "../../components/common/commHeader.tsx";
@@ -6,12 +6,27 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const UserProfile = () => {
     const [isEditing, setIsEditing] = useState(false);
-    const [email, setEmail] = useState("john.doe@company.com");
-    const [phone, setPhone] = useState("+1 (555) 123-4567");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
+    const [address, setAddress] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [userId, setUserId] = useState("john123");
+    const [userId, setUserId] = useState("");
     const [showConfirm, setShowConfirm] = useState(false);
+    const [userData, setUserData] = useState({
+        userId: "",
+        name: "",
+        cardNumber: "",
+        parName: "",
+        email: "",
+        password: "",
+        phone: "",
+        dept: "",
+        address: "",
+        birth: "",
+        parBirth: "",
+        position: ""
+    });
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -21,6 +36,51 @@ const UserProfile = () => {
         setShowConfirm(true);
     };
 
+    useEffect(() => {
+        const fetchUserProfile = async () => {
+            try {
+                const storedUser = sessionStorage.getItem("user");
+                if (!storedUser) return;
+
+                const { userUId } = JSON.parse(storedUser);
+
+                const response = await fetch(`/api/profile?userUId=${encodeURIComponent(userUId)}`, {
+                    method: "GET",
+                });
+
+                const data = await response.json();
+                console.log(data);
+                // 필요한 데이터 상태 업데이트
+                // base64로 인코딩된 비밀번호를 디코딩
+                const decodedPassword = atob(data.rax_u_pwd);
+                setUserData({
+                    userId: data.rax_u_user_id,
+                    name: data.rax_u_user_name,
+                    cardNumber: data.rax_u_uuid,
+                    parName: data.rax_u_par_name,
+                    email: data.rax_u_email,
+                    password: decodedPassword,
+                    phone: data.rax_u_tel,
+                    dept: data.rax_u_dept,
+                    address: data.rax_u_addr,
+                    birth: data.rax_u_birth,
+                    parBirth: data.rax_u_par_birth,
+                    position: data.rax_u_dept_role
+                });
+                setEmail(data.rax_u_email);
+                setPhone(data.rax_u_tel);
+                setPassword(decodedPassword);
+                setUserId(data.rax_u_user_id);
+                setAddress(data.rax_u_addr);
+            } catch (err) {
+                console.error("사용자 정보 요청 실패", err);
+            }
+        };
+
+        fetchUserProfile();
+    }, []);
+
+
     return (
         <div className={styles.appContainer}>
             <Sidebar />
@@ -29,12 +89,36 @@ const UserProfile = () => {
                 <div className={styles.card}>
                     <div className={styles.cardHeader}>
                         <h2 className={styles.title}>사용자 정보</h2>
-                        <button
-                            className={`${styles.editButton} ${isEditing ? styles.saveMode : ""}`}
-                            onClick={isEditing ? handleSaveClick : handleEditClick}
-                        >
-                            {isEditing ? "저장" : "수정"}
-                        </button>
+                        {isEditing ? (
+                            <div style={{ display: "flex", gap: "8px" }}>
+                                <button
+                                    className={`${styles.editButton} ${styles.saveMode}`}
+                                    onClick={handleSaveClick}
+                                >
+                                    저장
+                                </button>
+                                <button
+                                    className={styles.editButton}
+                                    onClick={() => {
+                                        setEmail(userData.email);
+                                        setPhone(userData.phone);
+                                        setPassword(userData.password);
+                                        setUserId(userData.userId);
+                                        setAddress(userData.address);
+                                        setIsEditing(false);
+                                    }}
+                                >
+                                    취소
+                                </button>
+                            </div>
+                        ) : (
+                            <button
+                                className={styles.editButton}
+                                onClick={handleEditClick}
+                            >
+                                수정
+                            </button>
+                        )}
                     </div>
                     <div className={styles.infoGrid}>
                         <div className={styles.infoCard}>
@@ -57,9 +141,9 @@ const UserProfile = () => {
                             <p className={styles.row}>
                                 <strong className={styles.label}>이름:</strong>
                                 {isEditing ? (
-                                    <input className={styles.inputField} value="홍길동" onChange={() => {}} />
+                                    <input className={styles.inputField} value={userData.name} onChange={() => {}} />
                                 ) : (
-                                    <span>홍길동</span>
+                                    <span>{userData.name}</span>
                                 )}
                             </p>
                         </div>
@@ -67,9 +151,9 @@ const UserProfile = () => {
                             <p className={styles.row}>
                                 <strong className={styles.label}>카드번호:</strong>
                                 {isEditing ? (
-                                    <input className={styles.inputField} value="1234-5678-9012-3456" onChange={() => {}} />
+                                    <input className={styles.inputField} value={userData.cardNumber} onChange={() => {}} />
                                 ) : (
-                                    <span>1234-5678-9012-3456</span>
+                                    <span>{userData.cardNumber}</span>
                                 )}
                             </p>
                         </div>
@@ -77,9 +161,9 @@ const UserProfile = () => {
                             <p className={styles.row}>
                                 <strong className={styles.label}>세례명:</strong>
                                 {isEditing ? (
-                                    <input className={styles.inputField} value="요한" onChange={() => {}} />
+                                    <input className={styles.inputField} value={userData.parName} onChange={() => {}} />
                                 ) : (
-                                    <span>요한</span>
+                                    <span>{userData.parName}</span>
                                 )}
                             </p>
                         </div>
@@ -142,9 +226,9 @@ const UserProfile = () => {
                             <p className={styles.row}>
                                 <strong className={styles.label}>부서:</strong>
                                 {isEditing ? (
-                                    <input className={styles.inputField} value="기획팀" onChange={() => {}} />
+                                    <input className={styles.inputField} value={userData.dept} onChange={() => {}} />
                                 ) : (
-                                    <span>기획팀</span>
+                                    <span>{userData.dept}</span>
                                 )}
                             </p>
                         </div>
@@ -154,13 +238,13 @@ const UserProfile = () => {
                                     <strong className={styles.label}>주소:</strong>
                                     <input
                                         className={`${styles.inputField} ${styles.editableInput}`}
-                                        value={"서울특별시 강남구"}
-                                        onChange={() => {}}
+                                        value={address}
+                                        onChange={(e) => setAddress(e.target.value)}
                                     />
                                 </div>
                             ) : (
                                 <div className={styles.row}>
-                                    <strong className={styles.label}>주소:</strong> 서울특별시 강남구
+                                    <strong className={styles.label}>주소:</strong> {address}
                                 </div>
                             )}
                         </div>
@@ -168,9 +252,9 @@ const UserProfile = () => {
                             <p className={styles.row}>
                                 <strong className={styles.label}>생년월일:</strong>
                                 {isEditing ? (
-                                    <input className={styles.inputField} value="1990-01-01" onChange={() => {}} />
+                                    <input className={styles.inputField} value={userData.birth} onChange={() => {}} />
                                 ) : (
-                                    <span>1990-01-01</span>
+                                    <span>{userData.birth}</span>
                                 )}
                             </p>
                         </div>
@@ -178,9 +262,9 @@ const UserProfile = () => {
                             <p className={styles.row}>
                                 <strong className={styles.label}>축일:</strong>
                                 {isEditing ? (
-                                    <input className={styles.inputField} value="06-24" onChange={() => {}} />
+                                    <input className={styles.inputField} value={userData.parBirth} onChange={() => {}} />
                                 ) : (
-                                    <span>06-24</span>
+                                    <span>{userData.parBirth}</span>
                                 )}
                             </p>
                         </div>
@@ -188,9 +272,9 @@ const UserProfile = () => {
                             <p className={styles.row}>
                                 <strong className={styles.label}>직급:</strong>
                                 {isEditing ? (
-                                    <input className={styles.inputField} value="대리" onChange={() => {}} />
+                                    <input className={styles.inputField} value={userData.position} onChange={() => {}} />
                                 ) : (
-                                    <span>대리</span>
+                                    <span>{userData.position}</span>
                                 )}
                             </p>
                         </div>
@@ -204,11 +288,47 @@ const UserProfile = () => {
                         <div className={styles.popupActions}>
                             <button
                                 className={styles.confirmButton}
-                                onClick={() => {
-                                    console.log("GET API 호출 - 최신 정보 가져오기");
+                                onClick={async () => {
+                                  try {
+                                    const storedUser = sessionStorage.getItem("user");
+                                    const { userUId } = storedUser ? JSON.parse(storedUser) : {};
+                                    const response = await fetch("/api/profile/save", {
+                                      method: "POST",
+                                      headers: {
+                                        "Content-Type": "application/json"
+                                      },
+                                      body: JSON.stringify({
+                                        userUId: userUId,
+                                        userId: userId,
+                                        email: email,
+                                        phone: phone,
+                                        password: password,
+                                        address: address
+                                      })
+                                    });
+
+                                    if (response.ok) {
+                                      alert("수정이 완료되었습니다.");
+                                    } else {
+                                      alert("수정에 실패했습니다.");
+                                      setEmail(userData.email);
+                                      setPhone(userData.phone);
+                                      setPassword(userData.password);
+                                      setUserId(userData.userId);
+                                      setAddress(userData.address);
+                                    }
+                                  } catch (error) {
+                                    console.error("Error during profile update:", error);
+                                    alert("에러 발생");
+                                    setEmail(userData.email);
+                                    setPhone(userData.phone);
+                                    setPassword(userData.password);
+                                    setUserId(userData.userId);
+                                    setAddress(userData.address);
+                                  } finally {
                                     setIsEditing(false);
                                     setShowConfirm(false);
-                                    alert("수정이 완료되었습니다.");
+                                  }
                                 }}
                             >
                                 확인

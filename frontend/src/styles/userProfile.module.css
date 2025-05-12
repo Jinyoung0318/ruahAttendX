@@ -13,7 +13,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     margin-top: 1.5rem;
     width: 100%;
-    max-width: 768px;
+    max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -109,7 +109,7 @@
 
 .editableInput {
     border: 1px solid #00ac0e;
-    width: 230px;
+    width: 320px;
     max-width: 100%;
     padding: 1px 8px;
     box-sizing: border-box;

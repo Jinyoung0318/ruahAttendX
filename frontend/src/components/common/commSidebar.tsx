@@ -4,13 +4,13 @@ import styles from '../../styles/sidebar.module.css';
 const CommSidebar = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const userDept = JSON.parse(sessionStorage.getItem('user') || '{}').userDept;
+    const userDeptRole = JSON.parse(sessionStorage.getItem('user') || '{}').userDeptRole;
 
     const menuItems = [
         { name: '출석률 현황 📈', path: '/dashboard' },
         { name: '카드 등록 💳', path: '/cardRegist' },
         { name: '사용자 프로필 👤', path: '/userProfile' },
-        ...(userDept === 'admin' ? [{ name: '사용자 관리 🧑‍🤝‍🧑', path: '/userManagement' }] : []),
+        ...(userDeptRole === 'admin' ? [{ name: '사용자 관리 🧑‍🤝‍🧑', path: '/userManagement' }] : []),
     ];
 
     return (
