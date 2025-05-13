@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Sidebar from '../../components/common/commSidebar.tsx';
@@ -8,7 +8,6 @@ import styles from '../../styles/userManagement.module.css';
 const UserManagement = () => {
     const [showConfirm, setShowConfirm] = useState(false);
     const [targetUser, setTargetUser] = useState<string | null>(null);
-
     const [showAddPopup, setShowAddPopup] = useState(false);
     const [newUser, setNewUser] = useState({
       rax_u_user_id: '',
@@ -22,9 +21,27 @@ const UserManagement = () => {
       rax_u_par_birth: '',
       rax_u_dept_role: '',
     });
-
     const [showEditPopup, setShowEditPopup] = useState(false);
     const [editUser, setEditUser] = useState<any>(null);
+    const [userList, setUserList] = useState<any[]>([]);
+    const [page, setPage] = useState(1);
+    const [limit, setLimit] = useState(10);
+    const [totalCount, setTotalCount] = useState(0);
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch(`/api/user/list?page=${page}&limit=${limit}`);
+                const data = await response.json();
+                setUserList(data.users); // 실제 데이터 배열
+                setTotalCount(data.total); // 전체 유저 수
+            } catch (err) {
+                console.error("사용자 불러오기 실패:", err);
+            }
+        };
+
+        fetchUsers();
+    }, [page, limit]); // ✅ 페이지나 개수 바뀌면 재요청
 
     const handleNewUserChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
       setNewUser({ ...newUser, [field]: e.target.value });
@@ -62,7 +79,7 @@ const UserManagement = () => {
                     <table className={styles.userTable}>
                         <thead>
                         <tr>
-                            <th>이름(이메일)</th>
+                            <th><div className={styles.columnHeader}>이름(이메일)</div></th>
                             <th><div className={styles.columnHeader}>세례명</div></th>
                             <th><div className={styles.columnHeader}>사용자 ID</div></th>
                             <th><div className={styles.columnHeader}>전화번호</div></th>
@@ -76,89 +93,79 @@ const UserManagement = () => {
                         </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>
-                                    <div className={styles.userInfo}>
-                                        <div>
-                                            <div>John Doe</div>
-                                            <div className={styles.email}>john.doe@company.com</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><div className={styles.dataCell}>베드로</div></td>
-                                <td><div className={styles.dataCell}>EMP001</div></td>
-                                <td><div className={styles.dataCell}>010-1234-5678</div></td>
-                                <td><div className={styles.dataCell}>서울시 강남구</div></td>
-                                <td><div className={styles.dataCell}>1990-01-01</div></td>
-                                <td><div className={styles.dataCell}>06-29</div></td>
-                                <td><div className={styles.dataCell}>전산팀</div></td>
-                                <td><div className={styles.dataCell}>팀장</div></td>
-                                <td><span className={styles.attendanceSuccess}>95.3%</span></td>
-                                <td className={styles.actionCell}>
-                                    <span
-                                      className={styles.actionEdit}
-                                      onClick={() => {
-                                        setEditUser({
-                                          rax_u_user_id: 'EMP001',
-                                          rax_u_user_name: 'John Doe',
-                                          rax_u_par_name: '베드로',
-                                          rax_u_email: 'john.doe@company.com',
-                                          rax_u_tel: '010-1234-5678',
-                                          rax_u_dept: '전산팀',
-                                          rax_u_addr: '서울시 강남구',
-                                          rax_u_birth: '1990-01-01',
-                                          rax_u_par_birth: '06-29',
-                                          rax_u_dept_role: '팀장'
-                                        });
-                                        setShowEditPopup(true);
-                                      }}
-                                    >
-                                      Edit
-                                    </span>
-                                    <span
-                                      className={styles.actionDelete}
-                                      onClick={() => {
-                                        setTargetUser('John Doe');
-                                        setShowConfirm(true);
-                                      }}
-                                    >
-                                      Delete
-                                    </span>
-                                </td>
+                          {userList.map((user, index) => (
+                            <tr key={index}>
+                              <td>
+                                <div className={styles.userInfo}>
+                                  <div>
+                                    <div style={{fontSize: '15px'}}>{user.rax_u_user_name}</div>
+                                    <div className={styles.email}>{user.rax_u_email}</div>
+                                  </div>
+                                </div>
+                              </td>
+                              <td><div className={styles.dataCell}>{user.rax_u_par_name}</div></td>
+                              <td><div className={styles.dataCell}>{user.rax_u_user_id}</div></td>
+                              <td><div className={styles.dataCell}>{user.rax_u_tel}</div></td>
+                              <td><div className={styles.dataCell}>{user.rax_u_addr}</div></td>
+                              <td><div className={styles.dataCell}>{user.rax_u_birth}</div></td>
+                              <td><div className={styles.dataCell}>{user.rax_u_par_birth}</div></td>
+                              <td><div className={styles.dataCell}>{user.rax_u_dept}</div></td>
+                              <td><div className={styles.dataCell}>{user.rax_u_dept_role}</div></td>
+                              <td><span className={styles.attendanceSuccess}>{user.year_attendance_rate}%</span></td>
+                              <td className={styles.actionCell}>
+                                <span
+                                  className={styles.actionEdit}
+                                  onClick={() => {
+                                    setEditUser(user);
+                                    setShowEditPopup(true);
+                                  }}
+                                >
+                                  Edit
+                                </span>
+                                <span
+                                  className={styles.actionDelete}
+                                  onClick={() => {
+                                    setTargetUser(user.rax_u_user_name);
+                                    setShowConfirm(true);
+                                  }}
+                                >
+                                  Delete
+                                </span>
+                              </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div className={styles.userInfo}>
-                                        <div>
-                                            <div>Jane Smith</div>
-                                            <div className={styles.email}>jane.smith@company.com</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td><div className={styles.dataCell}>마리아</div></td>
-                                <td><div className={styles.dataCell}>EMP002</div></td>
-                                <td><div className={styles.dataCell}>010-5678-1234</div></td>
-                                <td><div className={styles.dataCell}>서울시 마포구</div></td>
-                                <td><div className={styles.dataCell}>1992-03-15</div></td>
-                                <td><div className={styles.dataCell}>12-08</div></td>
-                                <td><div className={styles.dataCell}>홍보팀</div></td>
-                                <td><div className={styles.dataCell}>간사</div></td>
-                                <td><span className={styles.attendanceSuccess}>96.5%</span></td>
-                                <td className={styles.actionCell}>
-                                    <span className={styles.actionEdit}>Edit</span>
-                                    <span
-                                        className={styles.actionDelete}
-                                        onClick={() => {
-                                            setTargetUser('Jane Smith');
-                                            setShowConfirm(true);
-                                        }}
-                                    >
-                                      Delete
-                                    </span>
-                                </td>
-                            </tr>
+                          ))}
                         </tbody>
                     </table>
+                </div>
+                <div className={styles.paginationContainer}>
+                  <div className={styles.paginationCenter}>
+                    {Array.from({ length: Math.ceil(totalCount / limit) }, (_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setPage(i + 1)}
+                        className={page === i + 1 ? styles.activePage : styles.pageButton}
+                      >
+                        {i + 1}
+                      </button>
+                    ))}
+                  </div>
+                  <div className={styles.paginationRight}>
+                    <label htmlFor="limit-select" className={styles.limitLabel}>페이지당 개수:</label>
+                    <select
+                      id="limit-select"
+                      value={limit}
+                      onChange={(e) => {
+                        setPage(1);
+                        setLimit(Number(e.target.value));
+                      }}
+                      className={styles.limitSelect}
+                    >
+                      <option value={5}>5개</option>
+                      <option value={10}>10개</option>
+                      <option value={15}>15개</option>
+                      <option value={20}>20개</option>
+                    </select>
+                  </div>
                 </div>
                 {showConfirm && (
                     <div className={styles.popupOverlay}>

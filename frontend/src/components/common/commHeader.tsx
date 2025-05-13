@@ -1,15 +1,21 @@
 import styles from '../../styles/header.module.css';
 import { useLocation, useNavigate } from "react-router-dom";
-import { useState } from 'react';
-
-const userName = JSON.parse(sessionStorage.getItem('user') || '{}').userName;
-const userParName = JSON.parse(sessionStorage.getItem('user') || '{}').userParName;
+import { useEffect, useState } from 'react';
 
 const CommHeader = () => {
     const location = useLocation();
     const pageTitle = location.state?.pageTitle || '출석률 현황 📈';
     const navigate = useNavigate();
     const [showDropdown, setShowDropdown] = useState(false);
+
+    const [userName, setUserName] = useState('');
+    const [userParName, setUserParName] = useState('');
+
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem('user') || '{}');
+        setUserName(user.userName || '');
+        setUserParName(user.userParName || '');
+    }, []);
 
     return (
         <div className={styles.header}>

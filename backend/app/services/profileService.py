@@ -19,7 +19,7 @@ def update_user_info(data: dict):
     try:
         user = db.query(RaxUser).filter(RaxUser.rax_u_id == data["userUId"]).first()
         if user:
-            user.rax_u_id = data["userId"]
+            user.rax_u_user_id = data["userId"]
             user.rax_u_email = data["email"]
             user.rax_u_tel = data["phone"]
             user.rax_u_pwd = data["password"]

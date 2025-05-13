@@ -9,7 +9,7 @@
     border: 1px solid #00ac0e;
     background-color: white;
     border-radius: 8px;
-    padding: 24px;
+    padding: 11px;
     margin: 24px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
@@ -72,7 +72,7 @@
 .attendanceSuccess {
     background-color: #d1fae5;
     color: #065f46;
-    padding: 4px 8px;
+    padding: 2px 8px;
     border-radius: 4px;
     font-weight: 500;
     font-size: 13px;
@@ -92,7 +92,7 @@
 }
 
 .dataCell {
-    font-size: 14px;
+    font-size: 12px;
     color: #374151;
     font-weight: 400;
     display: flex;
@@ -212,4 +212,56 @@
   font-weight: bold;
   color: #374151;
   text-align: right;
+}
+.paginationContainer {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    align-items: center;
+    margin-top: 16px;
+    padding: 0 24px;
+    position: relative; /* 오른쪽 드롭다운 위치 기준 */
+}
+
+.paginationCenter {
+    display: flex;
+    gap: 8px;
+}
+
+.pageButton {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: white;
+  color: #374151;
+  cursor: pointer;
+}
+
+.activePage {
+  padding: 6px 12px;
+  border: 1px solid #00ac0e;
+  border-radius: 4px;
+  background-color: #00d30e;
+  color: white;
+  font-weight: 600;
+}
+
+.paginationRight {
+    position: absolute;
+    right: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.limitLabel {
+  font-size: 14px;
+  color: #374151;
+}
+
+.limitSelect {
+  padding: 6px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: white;
+  color: #374151;
 }
