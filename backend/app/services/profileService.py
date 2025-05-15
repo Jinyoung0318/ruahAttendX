@@ -5,7 +5,6 @@ def get_user_info(userUId: str):
     db = SessionLocal()
     try:
         user = db.query(RaxUser).filter(RaxUser.rax_u_id == userUId).first()
-        print("1",user)
         if not user:
             return None
         return user

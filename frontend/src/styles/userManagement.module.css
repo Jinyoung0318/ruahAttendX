@@ -121,7 +121,7 @@
     padding: 24px 32px;
     border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    max-width: 300px;
+    max-width: 700px;
     width: 100%;
     text-align: center;
     color: black;
@@ -202,9 +202,9 @@
     cursor: not-allowed;
 }
 .inputRow {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
 }
 
 .inputLabel {
@@ -264,4 +264,32 @@
   border-radius: 4px;
   background-color: white;
   color: #374151;
+}
+
+.validationError {
+    color: red;
+    font-size: 12px;
+    text-align: left;
+    height: 16px;
+    line-height: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.inputGroup {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 60px;
+}
+
+.showPassword {
+    position: absolute;
+    top: 30%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
 }
