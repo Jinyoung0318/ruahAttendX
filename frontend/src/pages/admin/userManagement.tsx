@@ -50,22 +50,57 @@ const UserManagement = () => {
         if (field === 'rax_u_user_id') {
             if (!value.trim()) {
                 error = '아이디는 필수입니다. (5~15자 사이)';
-            } else if (value.length < 5)
-                error = '아이디는 필수입니다. (5~15자 사이)';
-        } else if (field === 'rax_u_email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-            error = '유효한 이메일 형식이 아닙니다.';
-        } else if (field === 'rax_u_tel' && !/^010-\d{4}-\d{4}$/.test(value)) {
+            } else if (value.length < 5 || value.length > 15) {
+                error = '아이디는 5~15자 사이로 입력해 주세요.';
+            }
+        } else if (
+            field === 'rax_u_email' &&
+            (
+                !value ||
+                value.length > 255 ||
+                !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+            )
+        ) {
+            error = '유효한 이메일 형식이어야 하며 너무 길지 않아야 합니다.';
+        } else if (
+            field === 'rax_u_tel' &&
+            (
+                !/^010-\d{4}-\d{4}$/.test(value) ||
+                value.length > 13
+            )
+        ) {
             error = '전화번호는 010-0000-0000 형식으로 입력해 주세요.';
-        } else if (field === 'rax_u_addr' && value.length < 5) {
-            error = '주소는 5자 이상 입력해 주세요.';
+        } else if (
+            field === 'rax_u_addr' &&
+            (value.length < 5 || value.length > 255)
+        ) {
+            error = '주소는 5자 이상 255자 이하로 입력해 주세요.';
         } else if (field === 'rax_u_birth') {
             const today = new Date().toISOString().slice(0, 10);
             if (value > today) {
                 error = '생년월일은 오늘 날짜를 넘길 수 없습니다.';
             }
-        } else if (field === 'rax_u_dept_role' && value.length > 3) {
-            error = '직급은 3글자까지 입력 가능합니다.';
+        } else if (field === 'rax_u_par_birth') {
+            if (value.length !== 5) {
+                error = '축일은 5자로 입력해 주세요.';
+            } else if (!/^\d{2}-\d{2}$/.test(value)) {
+                error = '축일은 MM-DD 형식(예: 03-19)으로 입력해 주세요.';
+            }
+        } else if (
+            field === 'rax_u_dept_role' &&
+            value.length > 5
+        ) {
+            error = '직급은 5자 이내로 입력해 주세요.';
+        } else if (field === 'rax_u_pwd') {
+            if (!value.trim()) {
+                error = '비밀번호는 필수입니다.';
+            } else if (value.length < 5) {
+                error = '비밀번호는 최소 5자 이상이어야 합니다.';
+            } else if (value.length > 19) {
+                error = '비밀번호는 20자 미만으로 입력해 주세요.';
+            }
         }
+
         setNewUserErrors(prev => ({ ...prev, [field]: error }));
     };
 
@@ -96,9 +131,8 @@ const UserManagement = () => {
         };
 
         fetchUsers();
-    }, [page, limit]); // ✅ 페이지나 개수 바뀌면 재요청
+    }, [page, limit]); //
 
-    // Overload to accept both input and select events
     const handleNewUserChange = (
       e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
       field: string
@@ -313,6 +347,7 @@ const UserManagement = () => {
                                 placeholder="비밀번호 (5~15자)"
                                 value={newUser.rax_u_pwd}
                                 onChange={(e) => handleNewUserChange(e, 'rax_u_pwd')}
+                                onBlur={(e) => validateField('rax_u_pwd', e.target.value)}
                                 className={styles.inputField}
                               />
                               <span className={styles.showPassword} onClick={() => setShowPassword(!showPassword)}>
@@ -373,7 +408,7 @@ const UserManagement = () => {
                                                   ? new Date(newUser.rax_u_birth)
                                                   : new Date()
                                           }
-                                          locale="ko-KR"
+                                          locale="en-US"
                                           className={styles.reactCalendar}
                                       />
                                   </div>
@@ -389,8 +424,12 @@ const UserManagement = () => {
                                 placeholder="축일 (00-00)"
                                 value={newUser.rax_u_par_birth}
                                 onChange={(e) => handleNewUserChange(e, 'rax_u_par_birth')}
+                                onBlur={(e) => validateField('rax_u_par_birth', e.target.value)}
                                 className={styles.inputField}
                               />
+                              <div className={styles.validationError}>
+                                {newUserErrors.rax_u_par_birth}
+                              </div>
                             </div>
                           </div>
                           {/* 4. 이메일 / 전화번호 */}
@@ -472,12 +511,43 @@ const UserManagement = () => {
                             <button
                                 className={styles.confirmButton}
                                 onClick={async () => {
+                                  const requiredFields = [
+                                    'rax_u_user_id',
+                                    'rax_u_user_name',
+                                    'rax_u_email',
+                                    'rax_u_tel',
+                                    'rax_u_addr',
+                                    'rax_u_birth',
+                                    'rax_u_dept_role',
+                                    'rax_u_pwd',
+                                  ];
+
+                                  let localErrors = { ...newUserErrors };
+                                  let hasError = false;
+
+                                  requiredFields.forEach((field) => {
+                                    const value = newUser[field as keyof typeof newUser];
+                                    validateField(field, value);
+                                    if (!value || (typeof value === 'string' && value.trim() === '')) {
+                                      localErrors[field as keyof typeof newUserErrors] = '필수 입력 항목입니다.';
+                                      hasError = true;
+                                    }
+                                  });
+
+                                  // 최신 에러 반영
+                                  setNewUserErrors(localErrors);
+
+                                  // 유효성 에러 메시지를 하나의 문자열로 묶어서 표시
+                                  const errorMessages = Object.values(localErrors).filter(Boolean);
+                                  if (hasError || errorMessages.length > 0) {
+                                    alert(errorMessages.join('\n'));
+                                    return;
+                                  }
+
                                   try {
                                     const response = await fetch('/api/user/add', {
                                       method: 'POST',
-                                      headers: {
-                                        'Content-Type': 'application/json',
-                                      },
+                                      headers: { 'Content-Type': 'application/json' },
                                       body: JSON.stringify(newUser),
                                     });
 
@@ -498,12 +568,18 @@ const UserManagement = () => {
                                         rax_u_dept_role: '',
                                         rax_u_pwd: '',
                                       });
+
+                                      const updated = await fetch(`/api/user/list?page=${page}&limit=${limit}`);
+                                      const updatedData = await updated.json();
+                                      setUserList(updatedData.users);
+                                      setTotalCount(updatedData.total);
                                     } else {
                                       const errorText = await response.text();
                                       alert(errorText || "사용자 추가 실패");
                                     }
                                   } catch (err) {
                                     console.error('사용자 추가 중 오류:', err);
+                                    alert('사용자 추가 중 오류가 발생했습니다.');
                                   }
                                 }}
                             >
