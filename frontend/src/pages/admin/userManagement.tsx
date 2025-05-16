@@ -239,16 +239,37 @@ const UserManagement = () => {
                   </div>
                 </div>
                 {showConfirm && (
-                    <div className={styles.popupOverlay}>
-                        <div className={styles.popup}>
-                            <p>{targetUser}을(를) 지우시겠습니까?</p>
-                            <div className={styles.popupActions}>
-                                <button
-                                    className={styles.confirmButton}
-                          onClick={() => {
-                            // TODO: 삭제 API
-                            setShowConfirm(false);
-                            setTargetUser(null);
+                  <div className={styles.popupOverlay}>
+                    <div className={styles.popup}>
+                      <p>{targetUser}을(를) 지우시겠습니까?</p>
+                      <div className={styles.popupActions}>
+                        <button
+                          className={styles.confirmButton}
+                          onClick={async () => {
+                            try {
+                              const response = await fetch(`/api/user/delete?rax_u_id=${editUser?.rax_u_id}`, {
+                                method: 'DELETE',
+                              });
+
+                              if (response.ok) {
+                                alert('삭제가 완료되었습니다.');
+
+                                // 사용자 목록 다시 불러오기
+                                const updated = await fetch(`/api/user/list?page=${page}&limit=${limit}`);
+                                const updatedData = await updated.json();
+                                setUserList(updatedData.users);
+                                setTotalCount(updatedData.total);
+                              } else {
+                                const errorText = await response.text();
+                                alert(errorText || '삭제에 실패했습니다.');
+                              }
+                            } catch (err) {
+                              console.error('삭제 중 오류:', err);
+                              alert('삭제 중 오류가 발생했습니다.');
+                            } finally {
+                              setShowConfirm(false);
+                              setTargetUser(null);
+                            }
                           }}
                         >
                           삭제
@@ -365,7 +386,7 @@ const UserManagement = () => {
                             <div className={styles.inputGroup}>
                               <input
                                 type="text"
-                                placeholder="축일"
+                                placeholder="축일 (00-00)"
                                 value={newUser.rax_u_par_birth}
                                 onChange={(e) => handleNewUserChange(e, 'rax_u_par_birth')}
                                 className={styles.inputField}
@@ -461,7 +482,8 @@ const UserManagement = () => {
                                     });
 
                                     if (response.ok) {
-                                      console.log('사용자 추가 성공');
+                                      const result = await response.json();
+                                      alert(result.detail || "사용자 추가 성공");
                                       setShowAddPopup(false);
                                       setNewUser({
                                         rax_u_user_id: '',
@@ -477,7 +499,8 @@ const UserManagement = () => {
                                         rax_u_pwd: '',
                                       });
                                     } else {
-                                      console.error('사용자 추가 실패:', await response.text());
+                                      const errorText = await response.text();
+                                      alert(errorText || "사용자 추가 실패");
                                     }
                                   } catch (err) {
                                     console.error('사용자 추가 중 오류:', err);
@@ -524,7 +547,19 @@ const UserManagement = () => {
                         </div>
                         <div className={styles.inputRow}>
                           <span className={styles.inputLabel}>부서:</span>
-                          <input type="text" placeholder="부서" value={editUser.rax_u_dept} onChange={(e) => setEditUser({ ...editUser, rax_u_dept: e.target.value })} className={styles.inputField} />
+                          <select
+                            value={editUser.rax_u_dept}
+                            onChange={(e) => setEditUser({ ...editUser, rax_u_dept: e.target.value })}
+                            className={styles.inputField}
+                          >
+                            <option value="">부서를 선택하세요</option>
+                            {Array.isArray(deptList) &&
+                              deptList.map((dept, idx) => (
+                                <option key={idx} value={dept}>
+                                  {dept}
+                                </option>
+                              ))}
+                          </select>
                         </div>
                         <div className={styles.inputRow}>
                           <span className={styles.inputLabel}>직책:</span>
@@ -542,11 +577,41 @@ const UserManagement = () => {
                       <div className={styles.popupActions}>
                         <button
                           className={styles.confirmButton}
-                          onClick={() => {
-                            console.log('수정된 사용자 정보:', editUser);
-                            // TODO: 수정 API 호출
-                            setShowEditPopup(false);
-                            setEditUser(null);
+                          onClick={async () => {
+                            try {
+                              const response = await fetch('/api/user/edit', {
+                                method: 'PUT',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  rax_u_id: editUser.rax_u_id,
+                                  rax_u_user_id: editUser.rax_u_user_id,
+                                  rax_u_email: editUser.rax_u_email,
+                                  rax_u_tel: editUser.rax_u_tel,
+                                  rax_u_addr: editUser.rax_u_addr,
+                                  rax_u_dept: editUser.rax_u_dept,
+                                  rax_u_dept_role: editUser.rax_u_dept_role,
+                                }),
+                              });
+
+                              if (response.ok) {
+                                console.log('사용자 정보 수정 성공');
+                                setShowEditPopup(false);
+                                setEditUser(null);
+                                alert('수정이 완료되었습니다.');
+
+                                // 사용자 목록 갱신
+                                const updated = await fetch(`/api/user/list?page=${page}&limit=${limit}`);
+                                const updatedData = await updated.json();
+                                setUserList(updatedData.users);
+                                setTotalCount(updatedData.total);
+                              } else {
+                                console.error('사용자 정보 수정 실패:', await response.text());
+                              }
+                            } catch (err) {
+                              console.error('사용자 정보 수정 중 오류:', err);
+                            }
                           }}
                         >
                           저장
