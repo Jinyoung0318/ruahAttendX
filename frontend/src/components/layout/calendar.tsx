@@ -4,8 +4,19 @@ import styles from '../../styles/calendar.module.css';
 
 type CalendarValue = Date | [Date | null, Date | null] | null;
 
-const Calendar = () => {
+type CalendarProps = {
+    markedDates: string[];
+};
+
+const Calendar = ({ markedDates }: CalendarProps) => {
     const [value, setValue] = useState<CalendarValue>(new Date());
+
+    const tileClassName = ({ date, view }: any) => {
+        if (view === 'month') {
+            const dateStr = date.toISOString().split('T')[0];
+            return markedDates.includes(dateStr) ? styles.marked : null;
+        }
+    };
 
     return (
         <div className={styles.card}>
@@ -14,12 +25,15 @@ const Calendar = () => {
                     출석 달력 🗓️
                 </h2>
             </div>
-            <CalendarLib
-                onChange={setValue}
-                value={value}
-                locale="en-US"
-                className={styles.reactCalendar}
-            />
+            <div className={styles.calendarContainer} >
+                <CalendarLib
+                    onChange={setValue}
+                    value={value}
+                    locale="en-US"
+                    className={styles.reactCalendar}
+                    tileClassName={tileClassName}
+                />
+            </div>
         </div>
     );
 };

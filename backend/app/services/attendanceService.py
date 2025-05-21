@@ -17,22 +17,28 @@ def get_attendance_list():
     ).limit(5).all()
 
 
-def get_recent_attendances(start_date, end_date, userid):
+def get_recent_attendances(start_date, end_date, rax_u_id):
     db = SessionLocal()
 
-    user = db.query(RaxUser).filter(RaxUser.rax_u_user_id == userid).first()
-    if not user:
+    try:
+        rax_u_id = int(rax_u_id)
+    except (TypeError, ValueError):
         return []
 
-    # Convert strings to date objects
-    start_date_obj = datetime.strptime(start_date, '%Y-%m-%d').date()
-    end_date_obj = datetime.strptime(end_date, '%Y-%m-%d').date()
-
-    return db.query(
+    query = db.query(
         RaxAttendance.rax_a_status,
         RaxAttendance.rax_a_date
-    ).filter(
-        RaxAttendance.rax_u_id == user.rax_u_id,
-        RaxAttendance.rax_a_date >= start_date_obj,
-        RaxAttendance.rax_a_date <= end_date_obj
-    ).all()
+    ).filter(RaxAttendance.rax_u_id == rax_u_id)
+
+    if start_date and end_date:
+        try:
+            start_date_obj = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date_obj = datetime.strptime(end_date, '%Y-%m-%d').date()
+            query = query.filter(
+                RaxAttendance.rax_a_date >= start_date_obj,
+                RaxAttendance.rax_a_date <= end_date_obj
+            )
+        except ValueError:
+            pass
+
+    return [{"status": status, "date": date.isoformat()} for status, date in query.all()]
