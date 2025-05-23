@@ -123,7 +123,12 @@ const UserManagement = () => {
             try {
                 const response = await fetch(`/api/user/list?page=${page}&limit=${limit}`);
                 const data = await response.json();
-                setUserList(data.users); // 실제 데이터 배열
+                setUserList(
+                  data.users.map((user: any) => ({
+                    ...user,
+                    year_attendance_rate: user.year_attendance_rate || 0
+                  }))
+                ); // 실제 데이터 배열
                 setTotalCount(data.total); // 전체 유저 수
             } catch (err) {
                 console.error("사용자 불러오기 실패:", err);

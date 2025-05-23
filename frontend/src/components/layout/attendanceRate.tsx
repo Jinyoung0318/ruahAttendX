@@ -2,10 +2,39 @@ import ReactApexChart from 'react-apexcharts';
 import type { ApexOptions } from 'apexcharts';
 import styles from '../../styles/atttendanceRate.module.css';
 
-1
+type AttendanceRateProps = {
+    markedDates: string[];
+};
 
-const AttendanceRate = () => {
-    const series = [76, 67]; // Example attendance percentages
+const AttendanceRate = ({ markedDates }: AttendanceRateProps) => {
+    const currentYear = new Date().getFullYear();
+    const yearStart = new Date(`${currentYear}-01-01`);
+    const yearEnd = new Date(`${currentYear}-12-31`);
+
+    let totalWednesdays = 0;
+    let totalFridays = 0;
+
+    for (let d = new Date(yearStart); d <= yearEnd; d.setDate(d.getDate() + 1)) {
+        const day = d.getDay();
+        if (day === 3) totalWednesdays++;
+        if (day === 5) totalFridays++;
+    }
+
+    const attendedWednesdays = markedDates.filter(date => {
+        const d = new Date(date);
+        return d.getFullYear() === currentYear && d.getDay() === 3;
+    }).length;
+
+    const attendedFridays = markedDates.filter(date => {
+        const d = new Date(date);
+        return d.getFullYear() === currentYear && d.getDay() === 5;
+    }).length;
+
+    const wednesdayRate = totalWednesdays ? (attendedWednesdays / totalWednesdays) * 100 : 0;
+    const fridayRate = totalFridays ? (attendedFridays / totalFridays) * 100 : 0;
+    const averageRate = (wednesdayRate + fridayRate) / 2;
+
+    const series = [parseFloat(fridayRate.toFixed(1)), parseFloat(wednesdayRate.toFixed(1))];
     const options: ApexOptions = {
         chart: {
             height: 350,
@@ -24,15 +53,13 @@ const AttendanceRate = () => {
                         show: true,
                         label: '평균 출석률',
                         formatter: function () {
-                            const total = series.reduce((acc, val) => acc + val, 0);
-                            const average = (total / series.length).toFixed(1);
-                            return `${average}%`;
+                            return `${averageRate.toFixed(1)}%`;
                         },
                     },
                 },
             },
         },
-        colors: ['#fbbf24','#00ac0e'],
+        colors: ['#fbbf24', '#00ac0e'],
         labels: ['금요일', '수요일'],
     };
 

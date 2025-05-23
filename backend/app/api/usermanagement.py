@@ -33,6 +33,9 @@ def list_users(
 ):
     return get_user_list(page=page, limit=limit)
 
+
+
+
 @router.get("/dept/list")
 def dept_list():
     return {

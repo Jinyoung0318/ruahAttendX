@@ -11,7 +11,7 @@ const Dashboard = () => {
             <div className="flex-1">
                 <div className="p-6 space-y-6">
                     <div className="grid grid-cols-2 gap-6">
-                        <AttendanceRate />
+                        <AttendanceRate markedDates={markedDates}/>
                         <Calendar markedDates={markedDates} />
                     </div>
                     <RecentAttendance setMarkedDates={setMarkedDates} />
