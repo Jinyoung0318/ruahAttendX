@@ -533,7 +533,7 @@ const UserManagement = () => {
                                   requiredFields.forEach((field) => {
                                     const value = newUser[field as keyof typeof newUser];
                                     validateField(field, value);
-                                    if (!value || (typeof value === 'string' && value.trim() === '')) {
+                                    if (!value || value.trim() === '') {
                                       localErrors[field as keyof typeof newUserErrors] = '필수 입력 항목입니다.';
                                       hasError = true;
                                     }
