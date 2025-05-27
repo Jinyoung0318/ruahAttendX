@@ -7,7 +7,6 @@ import Dashboard from "./pages/attendance/dashboard";
 import UserProfile from "./pages/user/userProfile.tsx";
 import UserManagement from "./pages/admin/userManagement.tsx"
 import { MdBadge } from 'react-icons/md'
-import axios from 'axios'
 
 
 const MainPage = () => {
@@ -15,19 +14,28 @@ const MainPage = () => {
     const [scanRecords, setScanRecords] = useState([]);
 
     interface ScanRecord {
-        raxUUserName: string;
-        raxUParNAme: string;
-        raxADate: string;
+        userName: string;
+        userParName: string;
+        attendanceDate: string;
     }
 
     useEffect(() => {
-        axios.get('/api/attendances')
-            .then(response => {
-                setScanRecords(response.data || []);
-            })
-            .catch(() => {
-                setScanRecords([]); // 에러 발생 시에도 빈 배열로 처리
-            });
+        const fetchRecentAttendances = async () => {
+            try {
+                const response = await fetch('/api/attendances/recent');
+                if (!response.ok) {
+                    return ('네트워크 응답이 올바르지 않습니다.')
+                }
+
+                const data = await response.json();
+                setScanRecords(data || []);
+            } catch (error) {
+                console.error('인증 기록 불러오기 실패:', error);
+                setScanRecords([]);
+            }
+        };
+
+        fetchRecentAttendances();
     }, []);
 
 
@@ -59,9 +67,9 @@ const MainPage = () => {
                         {scanRecords.length > 0 ? (
                             scanRecords.map((record: ScanRecord, index) => (
                                 <tr key={index}>
-                                    <td>{record.raxUUserName}</td>
-                                    <td>{record.raxUParNAme}</td>
-                                    <td>{record.raxADate}</td>
+                                    <td>{record.userName}</td>
+                                    <td>{record.userParName}</td>
+                                    <td>{record.attendanceDate}</td>
                                 </tr>
                             ))
                         ) : (

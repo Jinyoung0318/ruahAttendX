@@ -117,3 +117,13 @@
     align-items: center;
     justify-content: center;
 }
+
+.readOnlyCalendar :global(.react-calendar__tile:focus) {
+    background-color: transparent !important;
+    color: inherit !important;
+    outline: none !important;
+}
+
+:global(.react-calendar__tile--active) {
+    color: inherit !important;
+}

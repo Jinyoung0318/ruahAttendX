@@ -30,3 +30,37 @@ def verify_user(user_id: str, password: str):
         return None
     finally:
         db.close()
+
+from backend.app.models.attendance import RaxAttendance
+
+def get_recent_attendance_records():
+    db = SessionLocal()
+    try:
+        return (
+            db.query(RaxAttendance)
+            .order_by(RaxAttendance.rax_a_id.desc())
+            .limit(5)
+            .all()
+        )
+    finally:
+        db.close()
+
+def enrich_attendance_with_user_info(records):
+    db = SessionLocal()
+    try:
+        result = []
+        for r in records:
+            user = db.query(RaxUser).filter(RaxUser.rax_u_id == r.rax_u_id).first()
+            if user:
+                result.append({
+                    "userName": user.rax_u_user_name,
+                    "userParName": user.rax_u_par_name,
+                    "attendanceDate": r.rax_a_date.strftime("%Y-%m-%d"),
+                })
+        return result
+    finally:
+        db.close()
+
+def get_recent_attendaces_users():
+    records = get_recent_attendance_records()
+    return enrich_attendance_with_user_info(records)

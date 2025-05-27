@@ -13,8 +13,8 @@ const Calendar = ({ markedDates }: CalendarProps) => {
 
     const tileClassName = ({ date, view }: any) => {
         if (view === 'month') {
-            const dateStr = date.toISOString().split('T')[0];
-            return markedDates.includes(dateStr) ? styles.marked : null;
+            const localDateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            return markedDates.includes(localDateStr) ? styles.marked : null;
         }
     };
 
@@ -25,7 +25,7 @@ const Calendar = ({ markedDates }: CalendarProps) => {
                     출석 달력 🗓️
                 </h2>
             </div>
-            <div className={styles.calendarContainer} >
+            <div className={`${styles.calendarContainer} ${styles.readOnlyCalendar}`} >
                 <CalendarLib
                     onChange={setValue}
                     value={value}
