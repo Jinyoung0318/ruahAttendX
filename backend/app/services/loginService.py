@@ -1,6 +1,8 @@
 import base64
+from fastapi import HTTPException
 from backend.database import SessionLocal
 from backend.app.models.user import RaxUser
+from datetime import datetime
 
 # 복호화
 def decrypt(encoded_text: str) -> str:
@@ -64,3 +66,23 @@ def enrich_attendance_with_user_info(records):
 def get_recent_attendaces_users():
     records = get_recent_attendance_records()
     return enrich_attendance_with_user_info(records)
+
+def check_attendance(card_num: str):
+    db = SessionLocal()
+    try:
+        user = db.query(RaxUser).filter(RaxUser.rax_u_uuid == card_num).first()
+        if not user:
+            raise HTTPException(status_code=400, detail="등록되지 않은 카드입니다.")
+
+        attendance = RaxAttendance(
+            rax_u_id=user.rax_u_id,
+            rax_a_status="1",
+            rax_a_date=datetime.now()
+        )
+        db.add(attendance)
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise e
+    finally:
+        db.close()
