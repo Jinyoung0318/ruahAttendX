@@ -29,8 +29,8 @@ async def check_attendances(request: Request):
         return JSONResponse(status_code=400, content={"status": "fail", "message": "카드 UID 누락"})
 
     try:
-        check_attendance(card_uid)
-        return JSONResponse(content={"status": "ok", "message": "출석 처리 완료"})
+        result = check_attendance(card_uid)
+        return JSONResponse(content=result)
     except HTTPException as he:
         return JSONResponse(status_code=he.status_code, content={"status": "fail", "message": he.detail})
     except Exception as e:

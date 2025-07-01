@@ -3,6 +3,7 @@ from fastapi import HTTPException
 from backend.database import SessionLocal
 from backend.app.models.user import RaxUser
 from datetime import datetime
+from sqlalchemy import Date, cast
 
 # 복호화
 def decrypt(encoded_text: str) -> str:
@@ -74,13 +75,27 @@ def check_attendance(card_num: str):
         if not user:
             raise HTTPException(status_code=400, detail="등록되지 않은 카드입니다.")
 
+        today = datetime.now().date()
+
+        existing = (
+            db.query(RaxAttendance)
+            .filter(RaxAttendance.rax_u_id == user.rax_u_id)
+            .filter(cast(RaxAttendance.rax_a_date, Date) == today)
+            .first()
+        )
+
+        if existing :
+            return {"status" : "ok", "message" : "오늘은 이미 출석하셨습니다."}
+
         attendance = RaxAttendance(
             rax_u_id=user.rax_u_id,
             rax_a_status="1",
             rax_a_date=datetime.now()
         )
+
         db.add(attendance)
         db.commit()
+        return {"status" : "ok", "message" : "출석 처리 완료"}
     except Exception as e:
         db.rollback()
         raise e
