@@ -1,7 +1,7 @@
 import base64
 from pydantic import BaseModel
 from fastapi import APIRouter, Query
-from backend.app.services.profileService import get_user_info, update_user_info
+from app.services.profileService import get_user_info, update_user_info
 
 router = APIRouter()
 

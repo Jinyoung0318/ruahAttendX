@@ -1,9 +1,9 @@
 from fastapi import FastAPI
-from backend.app.api.login import router as login_router
-from backend.app.api.attendance import router as attendance_router
-from backend.app.api.profile import router as profile_router
-from backend.app.api.usermanagement import router as usermanagement_router
-from backend.app.api.cardregist import router as cardregist_router
+from app.api.login import router as login_router
+from app.api.attendance import router as attendance_router
+from app.api.profile import router as profile_router
+from app.api.usermanagement import router as usermanagement_router
+from app.api.cardregist import router as cardregist_router
 
 app = FastAPI()
 # 출석 라우터 연결

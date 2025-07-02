@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String
-from backend.database import Base
+from database import Base
 
 class RaxDept(Base):
     __tablename__ = "rax_dept"

@@ -1,5 +1,5 @@
-from backend.database import SessionLocal
-from backend.app.models.user import RaxUser
+from database import SessionLocal
+from app.models.user import RaxUser
 
 def get_user_info(userUId: str):
     db = SessionLocal()

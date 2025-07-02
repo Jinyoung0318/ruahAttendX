@@ -1,7 +1,7 @@
 import base64
 from fastapi import HTTPException
-from backend.database import SessionLocal
-from backend.app.models.user import RaxUser
+from database import SessionLocal
+from app.models.user import RaxUser
 from datetime import datetime
 from sqlalchemy import Date, cast
 
@@ -34,7 +34,7 @@ def verify_user(user_id: str, password: str):
     finally:
         db.close()
 
-from backend.app.models.attendance import RaxAttendance
+from app.models.attendance import RaxAttendance
 
 def get_recent_attendance_records():
     db = SessionLocal()

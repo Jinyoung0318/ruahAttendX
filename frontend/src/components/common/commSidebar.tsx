@@ -17,7 +17,7 @@ const CommSidebar = () => {
         <aside className={styles.sidebar}>
             <div className={styles.logo}>
                 <button onClick={() => navigate('/dashboard')} className={styles.logoButton}>
-                    <img src="../../public/ruah2.png" alt="Logo" />
+                    <img src="/ruah2.png" alt="Logo" />
                 </button>
             </div>
             <ul className={styles.navList}>

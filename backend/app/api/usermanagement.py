@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from fastapi import APIRouter, Query, HTTPException
-from backend.app.services.usermanagementService import get_user_list, get_dept_list, create_user, update_user, delete_user
+from app.services.usermanagementService import get_user_list, get_dept_list, create_user, update_user, delete_user
 
 router = APIRouter()
 

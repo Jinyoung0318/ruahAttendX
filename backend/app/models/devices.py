@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Text
-from backend.database import Base
+from database import Base
 
 class RaxDevices(Base):
     __tablename__ = "rax_devices"

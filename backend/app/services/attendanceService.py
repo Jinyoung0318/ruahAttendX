@@ -1,6 +1,6 @@
-from backend.database import SessionLocal
-from backend.app.models.attendance import RaxAttendance
-from backend.app.models.user import RaxUser
+from database import SessionLocal
+from app.models.attendance import RaxAttendance
+from app.models.user import RaxUser
 from datetime import datetime
 
 def get_attendance_list():

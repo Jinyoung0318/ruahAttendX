@@ -1,6 +1,6 @@
 from typing import Optional
 from fastapi import APIRouter, Query
-from backend.app.services.attendanceService import get_attendance_list, get_recent_attendances
+from app.services.attendanceService import get_attendance_list, get_recent_attendances
 
 router = APIRouter()
 

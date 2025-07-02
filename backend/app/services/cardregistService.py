@@ -1,6 +1,6 @@
 from fastapi import HTTPException
-from backend.database import SessionLocal
-from backend.app.models.user import RaxUser
+from database import SessionLocal
+from app.models.user import RaxUser
 
 def regist_card(rax_u_id: int, rax_u_uuid: str):
     db = SessionLocal()

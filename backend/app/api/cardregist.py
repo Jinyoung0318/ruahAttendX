@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
-from backend.app.services.cardregistService import regist_card
+from app.services.cardregistService import regist_card
 
 router = APIRouter()
 

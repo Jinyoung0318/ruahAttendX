@@ -1,7 +1,7 @@
-from backend.app.models.attendance import RaxAttendance
-from backend.database import SessionLocal
-from backend.app.models.user import RaxUser
-from backend.app.models.dept import RaxDept
+from app.models.attendance import RaxAttendance
+from database import SessionLocal
+from app.models.user import RaxUser
+from app.models.dept import RaxDept
 import base64
 
 from datetime import datetime, timedelta

@@ -26,7 +26,7 @@ const CommHeader = () => {
                 style={{ cursor: 'pointer'}}
             >
                 <img
-                    src="../../public/mainRuah.png"
+                    src="/mainRuah.png"
                     alt="User"
                     className={styles.avatar}
                 />

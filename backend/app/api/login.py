@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request, HTTPException
 from fastapi.responses import JSONResponse
-from backend.app.services.loginService import verify_user, get_recent_attendaces_users, check_attendance
+from app.services.loginService import verify_user, get_recent_attendaces_users, check_attendance
 from pydantic import BaseModel
 router = APIRouter()
 
