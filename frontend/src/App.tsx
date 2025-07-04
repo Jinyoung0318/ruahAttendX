@@ -38,32 +38,6 @@ const MainPage = () => {
         fetchRecentAttendances();
     }, []);
 
-    // RFID 카드 입력 감지 및 서버 전송
-    // useEffect(() => {
-    //     let cardBuffer = '';
-    //
-    //     const handleKeyPress = (e: KeyboardEvent) => {
-    //         if (e.key === 'Enter') {
-    //             const cardNumber = cardBuffer.trim();
-    //             if (cardNumber) {
-    //                 fetch('/api/attendances/check', {
-    //                     method: 'POST',
-    //                     headers: {
-    //                         'Content-Type': 'application/json',
-    //                     },
-    //                     body: JSON.stringify({ card_uid: cardNumber }),
-    //                 }).catch(err => console.error('카드 전송 실패:', err));
-    //             }
-    //             cardBuffer = '';
-    //         } else {
-    //             cardBuffer += e.key;
-    //         }
-    //     };
-    //
-    //     window.addEventListener('keydown', handleKeyPress);
-    //     return () => window.removeEventListener('keydown', handleKeyPress);
-    // }, []);
-
     useEffect(() => {
         let cardBuffer = '';
 
@@ -81,6 +55,8 @@ const MainPage = () => {
                         });
 
                         if (response.ok) {
+                            const result = await response.json();
+                            alert(result.message);   // 메시지 출력
                             navigate(0)  // 성공 시 페이지 새로고침
                         } else {
                             console.error('서버 응답 오류:', response.statusText);
